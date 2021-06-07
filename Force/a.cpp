@@ -14,7 +14,7 @@ template<typename T1, typename T2> void debug(pair<T1, T2> _p) {cout<<"{";debug(
 template<typename T1, typename T2> void debug(map<T1, T2> _mm) {for (auto h: _mm) debug(h);}
 
 const lli INF = 1e18, MOD = 1e8;
-const int N = 6e5;
+const int N = 3e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
 
