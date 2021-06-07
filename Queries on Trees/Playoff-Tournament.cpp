@@ -18,8 +18,43 @@ const int N = 6e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
 
+// https://codeforces.com/contest/1535/problem/D
+
+int k, n, arr[N+5], par[N+1];
+string s;
+
+void dfs(int u, int p) {
+    par[u] = p;
+    if (u > n) arr[u] = 1;
+    else {
+        dfs(2*u, u); dfs(2*u+1, u);
+        if (s[u] == '0') arr[u] = arr[2*u+1];
+        else if (s[u] == '1') arr[u] = arr[2*u];
+        else arr[u] = arr[2*u] + arr[2*u+1];
+    }
+}
+
+void upd(int u) {
+    if (u == -1) return;
+    if (s[u] == '0') arr[u] = arr[2*u+1];
+    else if (s[u] == '1') arr[u] = arr[2*u];
+    else arr[u] = arr[2*u] + arr[2*u+1];
+    upd(par[u]);
+}
+
 void solve() {
+    cin >> k; n = (1<<k) - 1;
+    cin >> s; s.pb('#');
+    reverse(s.begin(), s.end());
+    dfs(1,-1);
     
+    int q; cin >> q;
+    while (q--) {
+        int p; char c; cin >> p >> c; 
+        s[n+1-p] = c;
+        upd(n+1-p);
+        cout << arr[1] << endl;
+    }
 }
 
 int main() {
