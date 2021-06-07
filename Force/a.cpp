@@ -19,24 +19,7 @@ const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
 
 void solve() {
-    string s; cin >> s;
-    int n = s.size();
-    s = "#" + s;
-    lli dp[n+1][2]; memset(dp, 0, sizeof dp);
-    lli qs[n+1]; memset(qs, 0, sizeof qs);
     
-    for (int i = 1; i <= n; i++) {
-        if (s[i] == '0') dp[i][0] = dp[i-1][1]+1;
-        else if (s[i] == '1') dp[i][1] = dp[i-1][0] + 1;
-        else {
-            dp[i][0] = dp[i-1][1]+1;
-            dp[i][1] = dp[i-1][0]+1;
-            if (s[i] == '?') qs[i] = qs[i-1]+1;
-        }
-    }
-    lli sum = 0;
-    for (int i = 1; i <= n; i++) sum += dp[i][0] + dp[i][1] - qs[i];
-    cout << sum << endl;
 }
 
 int main() {
