@@ -14,7 +14,7 @@ template<typename T1, typename T2> void debug(pair<T1, T2> _p) {cout<<"{";debug(
 template<typename T1, typename T2> void debug(map<T1, T2> _mm) {for (auto h: _mm) debug(h);}
 
 const lli INF = 1e18, MOD = 1e8;
-const int N = 3e5;
+const int N = 1e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
 
@@ -30,7 +30,7 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     cout << fixed << setprecision(9);
-    int t = 1; //cin >> t;
+    int t = 1; cin >> t;
     for (int _i = 1; _i <= t; _i++) {
         //cout << "Case #" << _i << ": ";
         solve();
