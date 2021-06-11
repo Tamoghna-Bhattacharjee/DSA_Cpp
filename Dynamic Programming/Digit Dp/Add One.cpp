@@ -18,6 +18,8 @@ const int N = 2e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
 
+// https://codeforces.com/contest/1513/problem/C
+
 lli dp[10][N+1]; // dp[i][j] = length of digit i after j moves
 
 void pre() {
