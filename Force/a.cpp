@@ -19,24 +19,7 @@ const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
 
 void solve() {
-    int n; cin >> n;
-    int a[n+1], sum = 0;
-    for (int i = 1; i <= n; i++) cin >> a[i], sum += a[i];
     
-    if (sum % 2 == 1) {
-        cout << YN[0] << endl; 
-        return;
-    }
-
-    bool dp[n+1][sum + 1]; memset(dp, 0, sizeof dp);
-    dp[0][0] = true;
-    for (int i = 1; i <= n; i++) {
-        for (int j = 0; j <= sum; j++) {
-            dp[i][j] = dp[i-1][j];
-            if (j-a[i] >= 0) dp[i][j] = dp[i][j] || dp[i-1][j-a[i]];
-        }
-    }
-    cout << YN[dp[n][sum]] << endl;
 }
 
 int main() {
