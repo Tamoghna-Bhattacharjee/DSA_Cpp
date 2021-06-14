@@ -18,25 +18,23 @@ const int N = 1e7;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
 
-void solve() {
-    int n; cin >> n;
-    int a[n+1], sum = 0;
-    for (int i = 1; i <= n; i++) cin >> a[i], sum += a[i];
-    
-    if (sum % 2 == 1) {
-        cout << YN[0] << endl; 
-        return;
-    }
+// https://leetcode.com/problems/edit-distance/
 
-    bool dp[n+1][sum + 1]; memset(dp, 0, sizeof dp);
-    dp[0][0] = true;
+void solve() {
+    string s, t; cin >> s >> t;
+    int n = (int) s.size(), m = (int) t.size();
+    s = "#" + s; t = "#" + t;
+    int dp[n+1][m+1];   // dp[i][j] -> edit dist b/w s[1..i] and t[1...i];
+    for (int i = 0; i <= m; i++) dp[0][i] = i;
+    for (int i = 0; i <= n; i++) dp[i][0] = i;
+        
     for (int i = 1; i <= n; i++) {
-        for (int j = 0; j <= sum; j++) {
-            dp[i][j] = dp[i-1][j];
-            if (j-a[i] >= 0) dp[i][j] = dp[i][j] || dp[i-1][j-a[i]];
+        for (int j = 1; j <= m; j++) {
+            if (s[i] == t[j]) dp[i][j] = dp[i-1][j-1];
+            else dp[i][j] = 1 + min(dp[i][j-1], min(dp[i-1][j], dp[i-1][j-1]));
         }
     }
-    cout << YN[dp[n][sum]] << endl;
+    cout << dp[n][m] << endl;
 }
 
 int main() {

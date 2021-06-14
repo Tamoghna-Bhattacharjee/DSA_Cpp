@@ -18,6 +18,8 @@ const int N = 1e7;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
 
+// https://leetcode.com/problems/partition-equal-subset-sum/
+
 void solve() {
     int n; cin >> n;
     int a[n+1], sum = 0;
@@ -27,7 +29,6 @@ void solve() {
         cout << YN[0] << endl; 
         return;
     }
-
     bool dp[n+1][sum + 1]; memset(dp, 0, sizeof dp);
     dp[0][0] = true;
     for (int i = 1; i <= n; i++) {
