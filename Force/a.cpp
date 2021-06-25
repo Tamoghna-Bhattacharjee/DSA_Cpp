@@ -14,13 +14,13 @@ template<typename T1, typename T2> void debug(pair<T1, T2> _p) {cout<<"{";debug(
 template<typename T1, typename T2> void debug(map<T1, T2> _mm) {for (auto h: _mm) debug(h);}
 
 const lli INF = 1e18, MOD = 1e9+7;
-const int N = 1e6;
+const int N = 4e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
 
 void solve() {
     
-}
+}   
 
 int main() {
     #ifndef ONLINE_JUDGE

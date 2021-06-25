@@ -17,8 +17,10 @@ const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
 
 void solve() {
-    cout << 3e5 << endl;
-    for (int i = 0; i < 3e5; i+=2) cout << "265541 295591 ";
+    map<int, int> mp;
+    mp[5]++;
+    mp[1]++;
+    debug(mp);
 }
 
 int main() {
