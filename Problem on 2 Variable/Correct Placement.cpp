@@ -18,6 +18,8 @@ const lli INF = 1e9-1, MOD = 998244353;
 const int N = 1e5; 
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 
+// https://codeforces.com/problemset/problem/1472/E
+
 bool cmp(vi a, vi b) {
     if (a[0] != b[0]) return a[0] < b[0];
     return a[1] > b[1];

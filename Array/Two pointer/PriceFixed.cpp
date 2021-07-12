@@ -18,8 +18,32 @@ const int N = 2e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};  
 
+// https://codeforces.com/contest/1539/problem/D
+
 void solve() {
-    
+    int n; cin >> n;
+    pair<lli, lli> p[n];
+    for (int i = 0; i < n; i++) {
+        lli a, b; cin >> a >> b;
+        p[i] = {b,a};
+    }
+    sort(p,p+n);
+    int L = 0, R = n-1;
+    lli ans = 0, buy = 0;
+    while (L <= R) {
+        if (p[L].first <= buy) {
+            buy += p[L].second;
+            ans += p[L].second;
+            L++;
+        } else {
+            lli x = min(p[L].first - buy, p[R].second);
+            p[R].second -= x;
+            ans += x*2;
+            buy += x;
+            if (p[R].second == 0) R--;
+        }
+    }
+    cout << ans << endl;
 }   
 
 int main() {

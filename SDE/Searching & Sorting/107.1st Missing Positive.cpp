@@ -14,12 +14,31 @@ template<typename T1, typename T2> void debug(pair<T1, T2> _p) {cout<<"{";debug(
 template<typename T1, typename T2> void debug(map<T1, T2> _mm) {for (auto h: _mm) debug(h);}
 
 const lli INF = 1e18, MOD = 1e9+7;
-const int N = 2e5;
+const int N = 4e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};  
 
+// https://leetcode.com/problems/first-missing-positive/
+
+// Idea -> 1st missing +ve element of array of size n lies b/w [1...n+1]
+// use array index as hash
+// arrange the array such that a[i] = i+1 i.e a[0] = 1, a[1] = 2 etc.
+// the 1st number where this seq break is the ans.
+
 void solve() {
-    
+    int n; cin >> n;
+    int a[n]; 
+    for (int &i: a) cin >> i;
+    for (int i = 0; i < n; i++) {
+        while (a[i] > 0 && a[i] <= n && a[a[i] - 1] != a[i]) swap(a[i], a[a[i]-1]);
+    }
+    int ans = n+1;
+    for (int i = 0; i < n; i++) {
+        if (a[i] != i+1) {
+            ans = i+1; break;
+        }
+    }
+    cout << ans << endl;
 }   
 
 int main() {

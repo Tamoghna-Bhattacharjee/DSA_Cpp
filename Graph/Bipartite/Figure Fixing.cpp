@@ -18,8 +18,53 @@ const int N = 2e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};  
 
+// https://codeforces.com/contest/1537/problem/F
+
+vi g[N+1];
+bool visit[N+1], color[N+1];
+lli a[N+1];
+
+bool dfs(int u, int p, int c) {
+    visit[u] = true;
+    color[u] = c;
+    bool ok = true;
+    for (int v: g[u]) {
+        if (v == p) continue;
+        else if (!visit[v]) ok = ok && dfs(v, u, 1^c);
+        else ok = ok && color[v] != color[u];
+    }
+    return ok;
+}
+
 void solve() {
-    
+    int n, m; cin >> n >> m;
+    for (int i = 0; i <= n; i++) g[i].clear(), visit[i] = color[i] = 0;
+    for (int i = 1; i <= n; i++) cin >> a[i];
+    lli sum = 0;
+    for (int i = 1; i <= n; i++) {
+        lli target; cin >> target;
+        a[i] = target - a[i];
+        sum += a[i];
+    }
+    for (int i = 0; i < m; i++) {
+        int u, v; cin >> u >> v;
+        g[u].pb(v);
+        g[v].pb(u);
+    }
+    if (abs(sum % 2) == 1) {
+        cout << YN[0] << endl; 
+        return;
+    }
+
+    bool isBipartite = dfs(1,-1,1);
+    if (!isBipartite) cout << YN[1] << endl;
+    else {
+        lli s[] = {0,0};
+        for (int i = 1; i <= n; i++) {
+            s[color[i]] += a[i];
+        }
+        cout << YN[s[0] == s[1]] << endl;
+    }
 }   
 
 int main() {
@@ -30,7 +75,7 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     cout << fixed << setprecision(9);
-    int t = 1; //cin >> t;
+    int t = 1; cin >> t;
     for (int _i = 1; _i <= t; _i++) {
         //cout << "Case #" << _i << ": ";
         solve();
