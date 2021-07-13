@@ -18,8 +18,23 @@ const int N = 2e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};  
 
+// https://codeforces.com/contest/1542/problem/C
+
+lli getLcm(lli x, lli y) {
+    return x*y/(__gcd(x,y));
+}
+
 void solve () {
-    
+    lli n; cin >> n;
+    lli ans = (n+1)/2 * 2 % MOD;
+    lli lcm = 2;
+    for (int i = 3; i <= 100; i++) {
+        lli x = getLcm(lcm, i);
+        lli cnt = (n/lcm) - (n/x);
+        ans = (ans + cnt * i % MOD) % MOD;
+        lcm = x;
+    }
+    cout << ans << endl;
 }  
 
 int main() {
