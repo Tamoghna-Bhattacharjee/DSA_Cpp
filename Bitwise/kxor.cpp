@@ -19,8 +19,28 @@ const int N = 2e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};  
 
+// https://codeforces.com/contest/1543/problem/D2
+
+int knxor(int x, int y, int k) {
+    int res = 0, pow = 1;
+    while (x > 0 || y > 0) {
+        int a = x%k, b = y % k;
+        res += pow * ((k + a - b)%k);
+        x /= k; y /= k;
+        pow *= k; 
+    }
+    return res;
+}
+
 void solve () {
-    
+    int n, k; cin >> n >> k;
+    for (int i = 0; i < n; i++) {
+        if (i == 0) cout << i << endl;
+        else if (i%2 == 1) cout << knxor(i-1, i, k) << endl;
+        else cout << knxor(i,i-1,k) << endl;
+        int r; cin >> r;
+        if (r == 1) break;
+    }
 }  
 
 int main() {
