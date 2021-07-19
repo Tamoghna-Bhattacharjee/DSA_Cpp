@@ -19,8 +19,34 @@ const int N = 1e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};  
 
+// https://practice.geeksforgeeks.org/problems/minimum-insertions-to-make-two-arrays-equal/1/
+
+int getLIS(vector<int> a) {
+    vector<int> tail;
+    for (int i: a) {
+        auto pos = lower_bound(tail.begin(), tail.end(), i);
+        if (pos == tail.end()) tail.pb(i);
+        else *pos = i;  
+    }
+    return tail.size();
+}
+
 void solve () {
+    int n, m; cin >> n >> m;
+    int A[n], B[m];
+    for (int &i: A) cin >> i;
+    for (int &i: B) cin >> i;
     
+    map<int, int> mp;
+    for (int i = 0; i < m; i++) mp[B[i]] = i;
+    
+    vector<int> a;
+    for (int i = 0; i < n; i++) {
+        if (mp.find(A[i]) != mp.end()) a.pb(mp[A[i]]);
+    } 
+    int x = getLIS(a);
+    int ans = n+m-2*x;
+    cout << ans << endl;
 }   
 
 int main() {

@@ -17,10 +17,10 @@ const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
 
 void solve() {
-    map<int, int> mp;
-    mp[5]++;
-    mp[1]++;
-    debug(mp);
+    for (int i = 1; i <= 7692; i++) {
+        for (char ch = 'a'; ch <= 'z'; ch++) cout << ch;
+        cout << endl;
+    }
 }
 
 int main() {
@@ -33,7 +33,6 @@ int main() {
     //cout << fixed << setprecision(9);
     int t = 1; //cin >> t;
     for (int _i = 1; _i <= t; _i++) {
-        //cout << "Case #" << _i << ": ";
         solve();
     }
 }
