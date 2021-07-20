@@ -21,6 +21,8 @@ const string YN[] = {"NO", "YES"};
 
 // https://practice.geeksforgeeks.org/problems/count-smaller-elements2214/1/
 
+// count the number of elements smaller than arr[i] in the range [i+1 ... n]
+
 vi res, arr;
 vector<pair<int, int>> a, temp;
     
