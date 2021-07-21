@@ -19,8 +19,36 @@ const int N = 1e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};  
 
+// https://practice.geeksforgeeks.org/problems/allocate-minimum-number-of-pages0937/1
+
+vi a;
+int n, m;
+
+bool check(int sum) {
+    vi v;
+    for (int i: a) {
+        if (!v.empty() && v.back() + i <= sum) v.back() += i;
+        else v.pb(i);
+    }
+    return v.size() <= m;
+}
+
 void solve () {
-    
+    cin >> n; a = vi(n);
+    int sum = 0;
+    for (int &i: a) cin >> i, sum += i;
+    cin >> m;
+
+    if (m > n) {
+        cout << -1 << endl; return;
+    }
+    int L = *max_element(a.begin(), a.end()), R = sum, ans = sum;
+    while (L <= R) {
+        int mid = (L + R) /2;
+        if (check(mid)) ans = min(ans, mid), R = mid - 1;
+        else L = mid + 1;
+    }
+    cout << ans << endl;
 }   
   
 int main() {
