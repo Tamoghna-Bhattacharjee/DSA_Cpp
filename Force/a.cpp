@@ -19,9 +19,9 @@ const int N = 1e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
 
-void solve () {
+void solve() {
     
-}   
+}  
   
 int main() {
     #ifndef ONLINE_JUDGE

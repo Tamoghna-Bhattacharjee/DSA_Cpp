@@ -17,10 +17,7 @@ const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
 
 void solve() {
-    for (int i = 1; i <= 7692; i++) {
-        for (char ch = 'a'; ch <= 'z'; ch++) cout << ch;
-        cout << endl;
-    }
+    
 }
 
 int main() {
@@ -31,7 +28,7 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     //cout << fixed << setprecision(9);
-    int t = 1; //cin >> t;
+    int t = 1; cin >> t;
     for (int _i = 1; _i <= t; _i++) {
         solve();
     }
