@@ -20,31 +20,7 @@ const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};   
 
 void solve() {
-    int n; cin >> n;
-    vector<vlli> v (n+1); v[0] = {0,0,0};
-    map<lli, lli> ind; // {x, i};
-    set<lli> s;
-    for (int i = 1; i <= n; i++) {
-        lli x, y, ty; cin >> x >> y >> ty;
-        v[i] = {x,y,ty};
-        ind[x] = i;
-        s.insert(x);
-    }
-    vlli dp(n+1), pref(n+1);
-    for (int i = 1; i <= n; i++) {
-        lli y = v[i][1];
-        lli idx = ind[*s.lower_bound(y)];
-        dp[i] = (v[i][0]-y + (pref[i-1] - pref[idx-1]) + MOD) % MOD;
-        pref[i] = (pref[i-1] + dp[i]) % MOD;
-    }
-    //debug(dp);
-    lli ans = 0;
-    for (int i = 1; i <= n; i++) {
-        ans = (ans + v[i][0] - v[i-1][0] + MOD) % MOD;
-        if (v[i][2] == 1) ans = (ans + dp[i] + MOD) % MOD;
-    }
-    ans = (ans + 1) % MOD;
-    cout << ans << endl;
+    
 }  
   
 int main() {
