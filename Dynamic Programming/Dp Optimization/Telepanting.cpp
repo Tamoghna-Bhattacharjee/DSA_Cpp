@@ -19,6 +19,8 @@ const int N = 1e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};   
 
+// https://codeforces.com/contest/1552/problem/F
+
 void solve() {
     int n; cin >> n;
     vector<vlli> v (n+1); v[0] = {0,0,0};
