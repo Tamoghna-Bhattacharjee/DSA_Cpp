@@ -46,7 +46,6 @@ lli qry(int si, int ss, int se, int qs, int qe) {
     lli l = qry(2*si, ss, mid, qs, qe);
     lli r = qry(2*si+1, mid+1, se, qs, qe);
     return l+r;
-
 }
 
 int main() {
