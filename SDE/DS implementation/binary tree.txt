@@ -1,0 +1,6 @@
+Vertical Traversal of BST
+https://practice.geeksforgeeks.org/problems/print-a-binary-tree-in-vertical-order/1
+
+Boundary Traversal of Binary tree 
+https://practice.geeksforgeeks.org/problems/boundary-traversal-of-binary-tree/1
+
