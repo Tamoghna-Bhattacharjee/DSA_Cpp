@@ -5,7 +5,6 @@ using namespace std;
 #define vi vector<int>
 #define vlli vector<lli>
 #define vpii vector<pair<int, int>>
-#define vsi vector<set<int>>
 #define pb push_back 
 template<typename T> void debug(T _a) {cout << _a << " ";}
 template<typename T1, typename T2> void debug(pair<T1, T2> _p) {cout<<"{";debug(_p.first);cout<<": ";debug(_p.second);cout<<"}\n";}
