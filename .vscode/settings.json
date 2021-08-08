@@ -24,6 +24,8 @@
         "valarray": "cpp",
         "*.tcc": "cpp",
         "bitset": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "chrono": "cpp",
+        "numeric": "cpp"
     }
 }

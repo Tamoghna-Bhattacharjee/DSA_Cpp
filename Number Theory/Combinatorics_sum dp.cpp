@@ -19,8 +19,52 @@ const int N = 3e6 + 5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};   
 
+// https://codeforces.com/contest/1549/problem/E
+
+lli F1[N+1], F2[N+1], inv[N+1], dp[N+1][3];
+
+void pre() {
+    inv[1] = 1;
+    for (int i = 2; i <= N; i++) inv[i] = (MOD - (MOD/i)*inv[MOD%i]%MOD)%MOD;
+    F1[0] = F2[0] = 1;
+    for (int i = 1; i <= N; i++) {
+        F1[i] = F1[i-1] * i % MOD;
+        F2[i] = F2[i-1] * inv[i] % MOD;
+    }
+}
+
+lli ncr (int n, int r) {
+    if (r > n) return 0;
+    return F1[n] % MOD * F2[r] % MOD * F2[n-r] % MOD;
+}
+
+lli power(lli a, lli n) {
+    lli res = 1;
+    while (n > 0) {
+        if (n%2 == 1) res = res * a % MOD;
+        a = a * a % MOD;
+        n /= 2;
+    }
+    return res;
+}
+
 void solve() {
-    
+    int n, q; cin >> n >> q;
+    pre();
+    dp[0][0] = dp[0][1] = dp[0][2] = n;
+    lli div3 = power(3, MOD-2) % MOD;
+    for (int r = 1; r <= 3*n; r++) {
+        dp[r][0] = (MOD + MOD + MOD + ncr(3*n, r+1) - (dp[r-1][0] * 2 % MOD) - dp[r-1][1]) % MOD;
+        dp[r][0] = dp[r][0] * div3 % MOD;
+
+        dp[r][1] = (dp[r][0] + dp[r-1][0]) % MOD;
+        dp[r][2] = (dp[r][1] + dp[r-1][1]) % MOD;
+    }
+    while (q--) {
+        int x; cin >> x;
+        lli ans = (dp[x][0] + ncr(3*n, x)) % MOD;
+        printf("%d\n", ans);
+    }
 }   
   
 int main() {

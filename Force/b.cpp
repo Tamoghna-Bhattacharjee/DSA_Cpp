@@ -17,7 +17,7 @@ const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
 
 void solve() {
-    for (int i = 0; i < 100000; i++) cout << 100000 << " ";
+    for (int i = 1; i <= 200000; i++) cout << i << endl;
 }
 
 int main() {
