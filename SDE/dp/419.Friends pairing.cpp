@@ -18,8 +18,26 @@ const int N = 1e6;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};   
 
+// https://practice.geeksforgeeks.org/problems/friends-pairing-problem5425/1#
+
+// f(n) = ways n people can remain single or pair up.
+// For n-th person there are two choices:
+// 1) n-th person remains single, we recur 
+//    for f(n - 1)
+// 2) n-th person pairs up with any of the 
+//    remaining n - 1 persons. We get (n - 1) * f(n - 2)
+// f(n) = f(n - 1) + (n - 1) * f(n - 2)
+
 void solve() {
-    
+    int n; cin >> n;
+    if (n <= 2) {
+        cout << n << endl;
+        return;
+    }
+    lli dp[n+1]; 
+    dp[1] = 1; dp[2] = 2;
+    for (int i = 3; i <= n; i++) dp[i] = (dp[i-1] + (i-1) * dp[i-2]) % MOD;
+    cout << dp[n] << endl;
 }   
   
 int main() {
@@ -30,7 +48,7 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     cout << fixed << setprecision(9);
-    int t = 1; cin >> t;
+    int t = 1; //cin >> t;
     for (int _i = 1; _i <= t; _i++) {
         //cout << "Case #" << _i << ": ";
         solve();

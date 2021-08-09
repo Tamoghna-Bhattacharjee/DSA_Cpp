@@ -18,8 +18,37 @@ const int N = 1e6;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};   
 
+// https://codeforces.com/contest/1557/problem/C
+
+// (xor=and) (xor=and) ... (xor > and) ....anything... => xor > and
+// ans = (2^n)^k - #ways xor > and
+
+lli power(lli a, lli n) {
+    lli res = 1;
+    while (n > 0) {
+        if (n % 2 == 1) res = res * a % MOD;
+        a = a * a % MOD;
+        n /= 2;
+    }
+    return res % MOD;
+}
+
 void solve() {
-    
+    lli n, k; cin >> n >> k;
+    lli ans = 0;
+    if (n%2 == 1) {
+        lli x = power(2, n-1) - 1;
+        for (lli i = 0; i < k; i++) {
+            ans = (ans + power(2, n*i) * x % MOD * power(power(2,n-1)+1, k-i-1)) % MOD;
+        }
+    } else {
+        lli x = power(2, n-1);
+        for (lli i = 0; i < k; i++) {
+            ans = (ans + power(2,n*i) * x % MOD * power((x-1+MOD)%MOD, k-i-1) % MOD) % MOD;
+        }
+    }
+    ans = (power(2,n*k) - ans + MOD) % MOD;
+    cout << ans << endl;
 }   
   
 int main() {
