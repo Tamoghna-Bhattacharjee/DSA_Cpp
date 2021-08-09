@@ -14,7 +14,7 @@ template<typename T> void debug(set<T> _aa) {for (auto h: _aa) debug(h); cout <<
 template<typename T1, typename T2> void debug(map<T1, T2> _mm) {for (auto h: _mm) debug(h);}
 
 const lli INF = 1e18, MOD = 1e9+7;
-const int N = 3e6 + 5;
+const int N = 1e6;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};   
 
