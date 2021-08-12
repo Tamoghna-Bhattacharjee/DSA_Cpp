@@ -18,8 +18,39 @@ const int N = 1e6;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};   
 
+// https://practice.geeksforgeeks.org/problems/number-of-subsets-with-product-less-than-k/1/#
+
+vector<lli> getSubset(vector<lli> v, int k) {
+    int n = v.size();
+    vector<lli> res;
+    for (int i = 0; i < (1<<n); i++) {
+        lli val = 1;
+        for (int j = 0; j < n; j++) {
+            int F = 1 << j;
+            if ((i&F)) val = val * v[j];
+        }
+        if (val <= k) res.pb(val); 
+    }
+    return res;
+}
+
 void solve() {
-    
+    int n, k; cin >> n >> k;
+    int a[n];
+    for (int &i: a) cin >> i;
+    vector<lli> v1, v2;
+    for (int i = 0; i < n; i++) {
+        if (a[i] <= k) {
+            if (i < n/2) v1.pb(a[i]);
+            else v2.pb(a[i]);
+        }
+    }
+    vector<lli> s1 = getSubset(v1, k);
+    vector<lli> s2 = getSubset(v2, k);
+    sort(s2.begin(), s2.end());
+    int cnt = 0;
+    for (int i: s1) cnt += upper_bound(s2.begin(), s2.end(), k/i) - s2.begin();
+    cout << cnt-1 << endl;
 }   
   
 int main() {
