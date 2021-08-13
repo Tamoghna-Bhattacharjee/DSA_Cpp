@@ -18,8 +18,14 @@ const int N = 5e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};   
 
+// https://www.geeksforgeeks.org/maximum-xor-value-of-a-pair-from-a-range/
+
 void solve() {
-    
+    int L, R; cin >> L >> R;
+    int x = L ^ R;
+    int ans = 0;
+    for (int i = log2(x); i >= 0; i--) ans += 1 << i;
+    cout << ans << endl;
 }   
   
 int main() {
