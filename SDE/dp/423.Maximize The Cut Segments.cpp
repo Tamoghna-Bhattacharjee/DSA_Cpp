@@ -33,7 +33,7 @@ void solve() {
             if (j-a[i] >= 0) dp[i][j] = max(dp[i][j], dp[i][j-a[i]] + 1);
         }
     }
-    return dp[3][n] < 0? 0: dp[3][n];
+    cout << dp[3][n] < 0? 0: dp[3][n] << endl;
 }   
   
 int main() {
