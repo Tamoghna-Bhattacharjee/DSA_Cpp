@@ -18,8 +18,22 @@ const int N = 5e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};   
 
-void solve() {
+// https://practice.geeksforgeeks.org/problems/cutted-segments1642/1#
 
+void solve() {
+    int n, x, y, z; cin >> n >> x >> y >> z;
+    vector<int> a = {0,x,y,z};
+    int dp[4][n+1]; memset(dp, 0, sizeof dp);
+    for (int j = 1; j <= n; j++) dp[0][j] = INT_MIN;
+    for (int i = 0; i < 4; i++) dp[i][0] = 0;
+    
+    for (int i = 1; i < 4; i++) {
+        for (int j = 1; j <= n; j++) {
+            dp[i][j] = dp[i-1][j];
+            if (j-a[i] >= 0) dp[i][j] = max(dp[i][j], dp[i][j-a[i]] + 1);
+        }
+    }
+    return dp[3][n] < 0? 0: dp[3][n];
 }   
   
 int main() {

@@ -18,8 +18,19 @@ const int N = 5e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};   
 
-void solve() {
+// https://www.interviewbit.com/problems/subarray-with-given-xor/
 
+void solve() {
+    int n, k; cin >> n >> k;
+    int a[n]; for (int &i: a) cin >> i;
+    int x = 0, ans = 0;
+    map<int, int> mp; mp[0] = 1;
+    for (int i: a) {
+        x ^= i;
+        ans += mp[x^k];
+        mp[x]++;
+    }
+    cout << ans << endl;
 }   
   
 int main() {

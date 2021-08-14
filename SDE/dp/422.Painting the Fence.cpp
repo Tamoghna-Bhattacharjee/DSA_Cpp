@@ -18,8 +18,17 @@ const int N = 5e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};   
 
-void solve() {
+// https://practice.geeksforgeeks.org/problems/painting-the-fence3727/1#
 
+void solve() {
+    int n, k; cin >> n >> k;
+    vector<lli> dp(n+1); 
+    dp[1] = k;
+    for (int i = 2; i <= n; i++) {
+        if (i == 2) dp[i] = (dp[i-1]*(k-1) + k) % MOD;
+        else dp[i] = (dp[i-1] * (k-1) + dp[i-2] * (k-1)) % MOD;
+    }
+    cout << dp[n] % MOD << endl;
 }   
   
 int main() {

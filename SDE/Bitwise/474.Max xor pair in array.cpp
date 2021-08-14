@@ -18,8 +18,25 @@ const int N = 5e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};   
 
-void solve() {
+// https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/
 
+void solve() {
+    int n; cin >> n;
+    int a[n]; for (int &i: a) cin >> i;
+    int ans = 0, mask = 0;
+    for (int i = 31; i >= 0; i--) {
+        mask += 1 << i;
+        set<int> s;
+        for (int i: a) s.insert(mask & i);
+        int temp = ans + (1 << i);
+        for (int pref: s) {
+            if (s.find(pref ^ temp) != s.end()) {
+                ans = max(ans, temp);
+                break;
+            }
+        }
+    }
+    cout << ans << endl;
 }   
   
 int main() {
