@@ -18,11 +18,26 @@ const int N = 3e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};   
 
+// https://codeforces.com/contest/713/problem/C
+// https://codeforces.com/blog/entry/77298
+// https://www.youtube.com/watch?v=p8RxN6Y9OOA&t=6s
+// https://codeforces.com/blog/entry/47821
+
 void solve() {
-    int h1, m1, h2, m2; cin >> h1 >> m1 >> h2 >> m2;
-    int d1 = abs(h1-h2), d2 = abs(m1-m2);
-    d1 = min(d1, 24-d1), d2 = min(d2, 60-d2);
-    cout << d1 << " " << d2 << endl;
+    int n; cin >> n;
+    int a[n]; for (int &i: a) cin >> i;
+    for (int i = 0; i < n; i++) a[i] -= i;
+    priority_queue<int> pq;
+    lli ans = 0;
+    for (int i = 0; i < n; i++) {
+        pq.push(a[i]);
+        if (pq.top() > a[i]) {
+            ans += pq.top()-a[i];
+            pq.pop();
+            pq.push(a[i]);
+        }
+    }
+    cout << ans << endl;
 }   
   
 int main() {
