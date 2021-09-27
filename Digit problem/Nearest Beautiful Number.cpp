@@ -18,8 +18,27 @@ const int N = 2e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"}; 
 
+// https://codeforces.com/contest/1560/problem/F2
+
 void solve() {
-    
+    string n; int k; cin >> n >> k;
+    int m = n.size();
+    while (1) {
+        set<char> s(n.begin(), n.end());
+        if (s.size() <= k) {
+            cout << n << endl; return;
+        }
+        s.clear();
+        for(int i = 0; i < m; i++) {
+            s.insert(n[i]);
+            if (s.size() > k) {
+                while (n[i] == '9') i--;
+                if (i >= 0) n[i]++;
+                for (int j = i+1; j < m; j++) n[j] = '0';
+                break;
+            }
+        }
+    }
 }   
   
 int main() {
