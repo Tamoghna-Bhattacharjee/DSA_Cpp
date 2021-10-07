@@ -27,7 +27,7 @@ void solve() {
     for (int i = 31; i >= 0; i--) {
         mask += 1 << i;
         set<int> s;
-        for (int i: a) s.insert(mask & i);
+        for (int j: a) s.insert(mask & j);
         int temp = ans + (1 << i);
         for (int pref: s) {
             if (s.find(pref ^ temp) != s.end()) {
