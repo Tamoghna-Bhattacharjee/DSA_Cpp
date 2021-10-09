@@ -1,3 +1,12 @@
+Left View of Binary Tree
+https://practice.geeksforgeeks.org/problems/left-view-of-binary-tree/1
+
+Top View of Binary Tree
+https://practice.geeksforgeeks.org/problems/top-view-of-binary-tree/1
+
+Bottom View of Binary Tree 
+https://practice.geeksforgeeks.org/problems/bottom-view-of-binary-tree/1
+
 Vertical Traversal of BST
 https://practice.geeksforgeeks.org/problems/print-a-binary-tree-in-vertical-order/1
 

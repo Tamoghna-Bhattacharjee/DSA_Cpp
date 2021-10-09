@@ -19,8 +19,30 @@ const int N = 2e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"}; 
 
+// https://codeforces.com/contest/1561/problem/D2
+
 void solve() {
+    lli n, m; cin >> n >> m;
+    vlli dp(n+5), prefSum(n+5), rngSum(n+5);
+    dp[1] = prefSum[1] = 1;
     
+    for (int j = 2, i = 1; j <= n; j++) {
+        rngSum[j*i] = (rngSum[j*i] + dp[i]) % m;
+        int x = min(n+1, j*i+j*1LL);
+        rngSum[x] = (rngSum[x] - dp[i] + m) % m;
+    }
+
+    for (int i = 2; i <= n; i++) {
+        rngSum[i] = (rngSum[i-1] + rngSum[i]) % m;
+        dp[i] = (prefSum[i-1] + rngSum[i]) % m;
+        for (int j = 2; j*i <= n; j++) {
+            rngSum[j*i] = (rngSum[j*i] + dp[i]) % m;
+            int x = min(n+1, j*i+j*1LL);
+            rngSum[x] = (rngSum[x] - dp[i] + m) % m;
+        }
+        prefSum[i] = (prefSum[i-1] + dp[i]) % m;
+    }
+    cout << dp[n] << endl;
 }   
   
 int main() {
@@ -31,7 +53,7 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     cout << fixed << setprecision(9);
-    int t = 1; cin >> t;
+    int t = 1; //cin >> t;
     for (int _i = 1; _i <= t; _i++) {
         //cout << "Case #" << _i << ": ";
         solve();
