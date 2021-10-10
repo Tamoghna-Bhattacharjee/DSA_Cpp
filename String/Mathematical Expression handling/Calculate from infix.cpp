@@ -38,6 +38,7 @@ int calculate(string s) {
     int n = s.size();
     stack<int> vals; vals.push(0);
     stack<char> op;
+    // postfix operation
     for (int i = 0; i < n; i++) {
         if (s[i] == ' ') continue;
         if (s[i] >= '0' && s[i] <= '9') {
