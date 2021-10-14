@@ -19,7 +19,18 @@ const int N = 2e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"}; 
 
+// https://codeforces.com/contest/1567/problem/D
+
 void solve() {
+    lli s, n; cin >> s >> n;
+    while(n > 1) {
+        lli r = 1e10;
+        while (s-r < n-1) r /= 10;
+        s -= r;
+        cout << r << " ";
+        n--;
+    }
+    cout << s << endl;
 
 }   
   
