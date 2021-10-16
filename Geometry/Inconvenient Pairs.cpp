@@ -19,8 +19,44 @@ const int N = 2e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"}; 
 
+// https://codeforces.com/contest/1569/problem/D
+
 void solve() {
-    
+    int n, m, k; cin >> n >> m >> k;
+    vi v(n), h(m);
+    for (int &i: v) cin >> i;
+    for (int &i: h) cin >> i;
+    v.pb(INT_MAX); h.pb(INT_MAX);
+
+    map<pair<int, int>, map<int, int>> mph, mpv;
+    for (int i = 0; i < k; i++) {
+        int x, y; cin >> x >> y;
+        auto itx = lower_bound(v.begin(), v.end(), x);
+        auto ity = lower_bound(h.begin(), h.end(), y);
+        if (*itx == x && *ity == y) continue;
+        if (*ity == y) mph[{*prev(itx), *itx}][y]++;
+        else if (*itx == x) mpv[{*prev(ity), *ity}][x]++;
+    }
+    lli ans = 0;
+    for (auto i: mph) {
+        lli cnt = 0;
+        for (auto j: i.second) {
+            lli t = j.second;
+            cnt += t;
+            ans -= t*(t-1)/2;
+        }
+        ans += cnt * (cnt - 1) / 2;
+    }
+    for (auto i: mpv) {
+        lli cnt = 0;
+        for (auto j: i.second) {
+            lli t = j.second;
+            cnt += t;
+            ans -= t*(t-1)/2;
+        }
+        ans += cnt * (cnt - 1) / 2;
+    }
+    cout << ans << endl;
 }   
   
 int main() {
