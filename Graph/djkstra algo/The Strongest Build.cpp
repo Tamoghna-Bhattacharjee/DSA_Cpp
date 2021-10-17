@@ -19,8 +19,53 @@ const int N = 2e6;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"}; 
 
+// https://codeforces.com/contest/1574/problem/D
+
 void solve() {
-    
+    int n; cin >> n;
+    vi c(n);
+    vector<vlli> a;
+    for (int i = 0; i < n; i++) {
+        cin >> c[i];
+        vlli temp(c[i]);
+        for (lli &i: temp) cin >> i;
+        a.pb(temp);
+    }
+    set<vi> ban;
+    int m; cin >> m;
+    for (int i = 0; i < m; i++) {
+        vi b(n);
+        for (int &i: b) cin >> i, i--;
+        ban.insert(b);
+    }
+    set<pair<lli, vi>> s;
+    {
+        lli sum = 0;
+        vi temp;
+        for (int i = 0; i < n; i++) {
+            temp.pb(c[i]-1);
+            sum += a[i].back();
+        }
+        s.insert({sum, temp});
+    }
+    while (1) {
+        auto cur = *s.rbegin();
+        s.erase(cur);
+        lli sum = cur.first;
+        vi b = cur.second;
+        if (ban.find(b) == ban.end()) {
+            for (int i: b) cout << i+1 << " "; cout << endl;
+            return;
+        }
+        for (int i = 0; i < n; i++) {
+            if (b[i] > 0) {
+                lli ss = sum - a[i][b[i]] + a[i][b[i]-1];
+                b[i]--;
+                s.insert({ss, b});
+                b[i]++;
+            }
+        }
+    }
 }   
   
 int main() {
