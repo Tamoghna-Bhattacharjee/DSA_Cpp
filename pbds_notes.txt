@@ -1,0 +1,21 @@
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+
+// ordered_set
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_set;
+
+// ordered_multiset using pair
+typedef tree<pair<int, int>, null_type, less<pair<int, int>>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
+-> pair => {element, frequency}
+-> upper_bound, lower_bound acts normally 
+-> order_of_key({x, 0}): gives no of elements strictly smaller than x since {x,0} is smaller than
+   each pair {x,y}
+-> size - order_of_key({x, INT_MAX}):  gives no of elements strictly greater than x since {x,INT_MAX}
+                                       is greater than each pair {x,y}
+
+// ordered_multiset
+typedef tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
+-> erase func don't acts normally
+-> upper_bound(x) =>  '>= x'
+-> lower_bound(x) =>  '> x'

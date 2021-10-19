@@ -27,8 +27,44 @@ const int N = 2e6;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"}; 
 
+// https://codeforces.com/contest/1579/problem/F
+
 void solve() {
-    
+    int n, d; cin >> n >> d;
+    vi a(n);
+    for (int &i: a) cin >> i;
+    vector<vi> g;
+    set<int> s;
+    for (int i = 0; i < n; i++) {
+        if (s.find(i) != s.end()) continue;
+        int x = i;
+        vi temp;
+        while (s.find(x) == s.end()) {
+            s.insert(x);
+            temp.pb(a[x]);
+            x = (x+d)%n;
+        }
+        int sz = temp.size();
+        for (int i = 0; i < sz; i++) temp.pb(temp[i]);
+        g.pb(temp);
+    }
+    int ans = 0;
+    for (vi i: g) {
+        int mx = 0, sum = 0;
+        for (int j: i) {
+            if (j == 0) sum = 0;
+            else {
+                sum++;
+                mx = max(mx, sum);
+            }
+        }
+        if (mx == i.size()) {
+            cout << -1 << endl;
+            return;
+        }
+        ans = max(mx, ans);
+    }
+    cout << ans << endl;
 }   
   
 int main() {
