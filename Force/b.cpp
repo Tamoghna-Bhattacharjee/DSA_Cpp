@@ -19,7 +19,6 @@ const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};   
 
 void solve() {
-    deque<int> q;
     
 }
   
