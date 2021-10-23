@@ -19,7 +19,14 @@ const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};   
 
 void solve() {
-    
+    cout << 1 << endl;
+    cout << 400 << " " << 400 << endl;
+    for (int i = 1; i <= 400; i++) cout << 1; cout << endl;
+    for (int i = 2; i <= 399; i++) {
+        for (int j = 1; j <= 400; j++) cout << (j==1||j==400);
+        cout << endl;
+    }
+    for (int i = 1; i <= 400; i++) cout << 1; cout << endl;
 }
   
 int main() {

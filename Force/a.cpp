@@ -22,8 +22,8 @@ template<typename T1, typename T2> void debug(map<T1, T2> _mm) {for (auto h: _mm
 // typedef tree<pair<int, int>, null_type, less<pair<int, int>>, 
 //             rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
 
-const lli INF = 1e18, MOD = 998244353;
-const int N = 2e6;
+const lli INF = 1e18, MOD = 1e9+7;
+const int N = 2e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"}; 
 
