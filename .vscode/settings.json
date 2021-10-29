@@ -26,6 +26,7 @@
         "bitset": "cpp",
         "random": "cpp",
         "chrono": "cpp",
-        "numeric": "cpp"
+        "numeric": "cpp",
+        "iomanip": "cpp"
     }
 }

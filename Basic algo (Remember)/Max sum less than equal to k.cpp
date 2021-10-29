@@ -27,8 +27,28 @@ const int N = 2e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"}; 
 
+// You are given an array of size n: n <= 20
+// You need to find the max sum such that sum <= k
+// 0 <= a[i] <= 1e9 and 1 <= k <= 1e9
+// since the sum is so big you can't use knapsack
+// Sol- O(2^n)
+
 void solve() {
-    
+    int n, k; cin >> n >> k;
+    vi a(n); for (int &i: a) cin >> i;
+    set<int> s; s.insert(0);
+    int mx = 0;
+    for (int i: a) {
+        set<int> temp;
+        for (int j: s) {
+            if (i+j <= k) {
+                temp.insert(i+j);
+                mx = max(mx, i+j);
+            }
+        }
+        for (int j: temp) s.insert(j);
+    }
+    cout << mx << endl;
 }
   
 int main() {
@@ -39,7 +59,7 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     cout << fixed << setprecision(9);
-    int t = 1; cin >> t;
+    int t = 1; //cin >> t;
     for (int _i = 1; _i <= t; _i++) {
         //cout << "Case #" << _i << ": ";
         solve();
