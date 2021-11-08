@@ -22,17 +22,38 @@ template<typename T1, typename T2> void debug(map<T1, T2> _mm) {for (auto h: _mm
 // typedef tree<int, null_type, less<int>, 
 //             rb_tree_tag, tree_order_statistics_node_update> ordered_set;
 
-const lli INF = 1e18, MOD = 1e9+7;
+const lli INF = 1e15, MOD = 1e9+7;
 const int N = 4e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"}; 
 
-void solve() {
-    cout << 2000 << " " << 2000 << endl;
-    for (int i = 0; i < 2000; i++) {
-        for (int j = 0; j < 2000; j++) cout << "R"; cout << endl;
-    }
+// https://leetcode.com/problems/permutation-sequence/
 
+vi F;
+
+string f(int k, set<int> st) {
+    if (st.empty()) return "";
+    int n = st.size();
+    int x = -1, sum = 0, c = 1;
+    for (int i: st) {
+        if(F[n-1] * c >= k) {
+            x = i;
+            sum = F[n-1]*(c-1);
+            break;
+        }
+        c++;
+    }
+    st.erase(x);
+    return to_string(x) + f(k-sum, st);
+}
+
+void solve() {
+    int n, k; cin >> n >> k;
+    F = vi(n+1); F[0] = 1;
+    for (int i = 1; i <= n; i++) F[i] = i * F[i-1];
+    set<int> st;
+    for (int i = 1; i <= n; i++) st.insert(i);
+    cout << f(k, st) << endl;
 }
   
 int main() {

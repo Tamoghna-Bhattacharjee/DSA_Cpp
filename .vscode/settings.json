@@ -27,6 +27,7 @@
         "random": "cpp",
         "chrono": "cpp",
         "numeric": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "limits": "cpp"
     }
 }

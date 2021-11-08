@@ -22,18 +22,26 @@ template<typename T1, typename T2> void debug(map<T1, T2> _mm) {for (auto h: _mm
 // typedef tree<int, null_type, less<int>, 
 //             rb_tree_tag, tree_order_statistics_node_update> ordered_set;
 
-const lli INF = 1e18, MOD = 1e9+7;
+const lli INF = 1e15, MOD = 1e9+7;
 const int N = 4e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"}; 
 
-void solve() {
-    cout << 2000 << " " << 2000 << endl;
-    for (int i = 0; i < 2000; i++) {
-        for (int j = 0; j < 2000; j++) cout << "R"; cout << endl;
-    }
+// https://leetcode.com/problems/smallest-range-ii/
 
-}
+void solve() {
+    int n, k; cin >> n >> k;
+    vi a(n);
+    for (int &i: a) cin >> i;
+    sort(a.begin(), a.end());
+    int ans = a[n-1]-a[0];
+    for (int i = 0; i < n-1; i++) {
+        int mx = max(a[n-1]-k, a[i]+k);
+        int mi = min(a[0]+k, a[i+1]-k);
+        ans = min(ans, mx - mi);
+    }
+    return ans;
+}   
   
 int main() {
     #ifndef ONLINE_JUDGE
@@ -43,7 +51,7 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     cout << fixed << setprecision(9);
-    int t = 1; //cin >> t;
+    int t = 1; cin >> t;
     for (int _i = 1; _i <= t; _i++) {
         //cout << "Case #" << _i << ": ";
         solve();

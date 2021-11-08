@@ -19,7 +19,7 @@ const int N = 1e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};   
  
- // https://practice.geeksforgeeks.org/problems/next-permutation5226/1#
+ // https://leetcode.com/problems/next-permutation/ 
 
 void solve() {
     int n; cin >> n;
@@ -29,22 +29,16 @@ void solve() {
         debug(a); return;
     }
     int i = n-1;
-    while (i >= 1) {
-        if (a[i-1] <= a[i]) break;
-        i--;
-    }
+    while (i > 0 && a[i] <= a[i-1]) i--;
     if (i == 0) {
-        reverse(a.begin(), a.end());
-        debug(a);
+        sort(a.begin(), a.end());
         return;
     }
-    int j = n-1;
-    while (j >= i) {
-        if (a[j] >= a[i-1]) break;
-        j--;
-    }
-    swap(a[j], a[i-1]);
-    reverse(a.begin()+i, a.end());
+    int j = i;
+    while (j < n && a[j] > a[i-1]) j++;
+    j--;
+    swap(a[i-1], a[j]);
+    sort(a.begin()+i, a.end());
     debug(a);
 }  
   
