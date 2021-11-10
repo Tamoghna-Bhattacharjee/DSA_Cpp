@@ -27,8 +27,20 @@ const int N = 4e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"}; 
 
+// https://leetcode.com/problems/find-the-duplicate-number/
+
 void solve() {
-    
+    int n; cin >> n;
+    vi a(n+1); for (int &i: a) cin >> i;
+    int slow = 0, fast = 0;
+    do {
+        slow = a[slow];
+        fast = a[a[fast]];
+        
+    } while (slow != fast);
+    slow = 0;
+    while (slow != fast) slow = a[slow], fast = a[fast];
+    cout << slow << endl;
 }   
   
 int main() {
@@ -39,7 +51,7 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     cout << fixed << setprecision(9);
-    int t = 1; //cin >> t;
+    int t = 1; cin >> t;
     for (int _i = 1; _i <= t; _i++) {
         //cout << "Case #" << _i << ": ";
         solve();

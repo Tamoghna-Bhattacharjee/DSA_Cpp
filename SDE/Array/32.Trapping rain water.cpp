@@ -27,8 +27,20 @@ const int N = 4e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"}; 
 
+// https://leetcode.com/problems/trapping-rain-water/
+
 void solve() {
-    
+    int n; cin >> n;
+    vi a(n); for (int &i: a) cin >> i;
+    int L = 0, R = n-1;
+    lli l_mx = 0, r_mx = 0, ans = 0;
+    while (L < R) {
+        l_mx = max(l_mx, a[L] * 1LL);
+        r_mx = max(r_mx, a[R] * 1LL);
+        if (l_mx < r_mx) ans += l_mx-a[L], L++;
+        else ans += r_mx - a[R], R--;
+    }
+    cout << ans << endl;
 }   
   
 int main() {

@@ -27,8 +27,20 @@ const int N = 4e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"}; 
 
+// https://practice.geeksforgeeks.org/problems/maximum-product-subarray3604/1#
+
 void solve() {
-    
+    int n; cin >> n;
+    vlli a(n); for (lli &i: a) cin >> i;
+    lli ans = a[0];
+    lli mx = a[0], mi = a[0];
+    for (int i = 1; i < n; i++) {
+        if (a[i] < 0) swap(mx, mi);
+        mx = max(a[i], mx * a[i]);
+        mi = min(a[i], mi * a[i]);
+        ans = max(ans, mx);
+    }
+    cout << ans << endl;
 }   
   
 int main() {
