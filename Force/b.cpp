@@ -28,11 +28,7 @@ const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"}; 
 
 void solve() {
-    cout << 2000 << " " << 2000 << endl;
-    for (int i = 0; i < 2000; i++) {
-        for (int j = 0; j < 2000; j++) cout << "R"; cout << endl;
-    }
-
+    
 }
   
 int main() {
