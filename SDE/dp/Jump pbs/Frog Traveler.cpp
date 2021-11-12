@@ -27,41 +27,54 @@ const int N = 2e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"}; 
 
-// https://leetcode.com/problems/maximum-profit-in-job-scheduling/
-
-vector<vi> j;
-
-int getInd(int L, int R, int x) {
-    while (L <= R) {
-        int mid = (L + R) / 2;
-        if (j[mid][0] >= x) R = mid - 1;
-        else L = mid + 1;
-    }
-    return R+1;
-}
+// https://codeforces.com/contest/1602/problem/D
 
 void solve() {
     int n; cin >> n;
-    vi start(n), end(n), prof(n);
-    for (int &i: start) cin >> i;
-    for (int &i: end) cin >> i;
-    for (int &i: prof) cin >> i;
-    
-    j = vector<vi>(n);
-    for (int i = 0; i < n; i++) j[i] = {start[i], end[i], prof[i]};
-    sort(j.begin(), j.end());
-    
-    vi dp(n); // dp[i] = max prof in the range jobs[i..n-1]
-    dp[n-1] = j[n-1][2];
-    for (int i = n-2; i >= 0; i--) {
-        dp[i] = j[i][2];
-        int ind = getInd(i+1, n-1, j[i][1]);
-        if (ind < n) {
-            dp[i] += dp[ind];
+    vi a(n+1), b(n+1), dp(n+1, INT_MAX);
+    for (int i = 1; i <= n; i++) cin >> a[i];
+    for (int i = 1; i <= n; i++) cin >> b[i];
+    set<int> unvisit; 
+    for (int i = 1; i <= n; i++) unvisit.insert(i);
+    queue<pair<int, int>> q;
+    map<int, int> par;
+    dp[n] = 0; q.push({n,n}); par[n] = -1; unvisit.erase(n);
+
+    while (!q.empty()) {
+        int landed = q.front().first;
+        int cur = q.front().second;
+        q.pop();
+        if (cur - a[cur] <= 0) {
+            if (dp[cur] + 1 < dp[0]) {
+                dp[0] = 1 + dp[cur];
+                par[0] = landed;
+            }
         }
-        dp[i] = max(dp[i], dp[i+1]);
+        auto it = unvisit.lower_bound(cur - a[cur]);
+        while (it != unvisit.end() && *it < cur) {
+            int to = *it + b[*it];
+            if (dp[cur]+1 < dp[to]) {
+                dp[to] = 1 + dp[cur];
+                par[*it] = landed;
+                q.push({*it, to});
+            }
+            unvisit.erase(it);
+            it = unvisit.lower_bound(cur - a[cur]);
+        }
+    } 
+    if (dp[0] == INT_MAX) {
+        cout << -1 << endl; return;
     }
     cout << dp[0] << endl;
+    int cur = 0;
+    vi res;
+    while (cur != -1) {
+        res.pb(cur);
+        cur = par[cur];
+    }
+    res.pop_back();
+    reverse(res.begin(), res.end());
+    debug(res);
 }   
   
 int main() {
