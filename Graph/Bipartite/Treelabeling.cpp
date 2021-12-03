@@ -22,40 +22,46 @@ template<typename T1, typename T2> void debug(map<T1, T2> _mm) {for (auto h: _mm
 // typedef tree<int, null_type, less<int>, 
 //             rb_tree_tag, tree_order_statistics_node_update> ordered_set;
 
-const lli INF = 1e18, MOD = 998244353;
+const lli INF = 1e18, MOD = 1e9 + 7;
 const int N = 2e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"}; 
 
-lli n;
-vlli a, dp;
+// https://codeforces.com/contest/1605/problem/D
 
-lli power(lli a, lli m) {
-    lli res = 1;
-    while (m > 0) {
-        if (m%2 == 1) res = res * a % MOD;
-        a = a * a % MOD;
-        m /= 2;
+vi g[N+1];
+vi col[2];
+
+void dfs(int u, int p, int x) {
+    col[x].pb(u);
+    for (int v: g[u]) {
+        if (v != p) dfs(v, u, 1^x);
     }
-    return res;
 }
 
 void solve() {
-    cin >> n;
-    a = vlli(n); for (lli &i: a) cin >> i;
-    map<lli, lli> F;
-    for (lli i: a) F[i]++;
-    // dp = vlli(n+1);
-    // dp[0] = F[0];
-    // for (int i = 1; i <= n; i++) dp[i] = dp[i-1] + F[i];
-    if (n == 1) {
-        cout << (a[0] <= 1) << endl;
-        return;
+    int n; cin >> n;
+    for (int i = 0; i <= n; i++) g[i].clear();
+    col[0].clear(); col[1].clear();
+    for (int i = 1; i <= n-1; i++) {
+        int u, v; cin >> u >> v;
+        g[u].pb(v); g[v].pb(u);
     }
-    // lli cnt = dp[2] - F[1];
-    lli ans = (power(2, F[0]+F[2]) % MOD + MOD - 1) % MOD;
-    ans = (ans + MOD + power(2, F[1]) % MOD - 1) % MOD;
-    cout << ans << endl;
+    dfs(1,-1,0);
+    if (col[0].size() > col[1].size()) swap(col[0], col[1]);
+    vector<int> res(n+1);
+    int w = col[0].size();
+    for (int i = 1; i <= n; i++) {
+        int msb = (int) log2(i);
+        if (w & (1 << msb)) {
+            res[col[0].back()] = i;
+            col[0].pop_back();
+        } else {
+            res[col[1].back()] = i;
+            col[1].pop_back();
+        }
+    }
+    for (int i = 1; i <= n; i++) cout << res[i] << " "; cout << endl;
 }   
   
 int main() {
