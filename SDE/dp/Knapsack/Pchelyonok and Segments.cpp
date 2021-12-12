@@ -27,8 +27,30 @@ const int N = 2e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"}; 
 
+lli n;
+vlli a, p;
+
+// https://codeforces.com/contest/1582/problem/E
+
 void solve() {
-    
+    cin >> n;
+    a = vlli(n+1); p = vlli(n+1);
+    for (int i = 1; i <= n; i++) cin >> a[i], p[i] = p[i-1] + a[i];
+    lli k = 0;
+    while (k*(k+1)/2 < n) k++;
+    vector<vlli> dp(k+2, vlli(n+2, -INF)); 
+    // dp[i][j] -> max sum of length i in the suffix of j following all the condn
+    lli ans = 1;
+    for (int i = n; i >= 1; i--) dp[1][i] = max(dp[1][i+1], a[i]);
+    for (int i = 2; i <= k; i++) {
+        for (int j = n-i; j >= 1; j--) {
+            lli sum = p[j+i-1] - p[j-1];
+            dp[i][j] = dp[i][j+1];
+            if (sum < dp[i-1][j+i]) dp[i][j] = max(dp[i][j], sum);
+            if (dp[i][j] != -INF) ans = i;
+        }
+    }
+    cout << ans << endl;
 }   
   
 int main() {

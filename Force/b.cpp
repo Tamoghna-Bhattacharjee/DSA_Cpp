@@ -27,35 +27,64 @@ const int N = 2e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"}; 
 
-lli n;
-vlli a, dp;
-
-lli power(lli a, lli m) {
-    lli res = 1;
-    while (m > 0) {
-        if (m%2 == 1) res = res * a % MOD;
-        a = a * a % MOD;
-        m /= 2;
+bool f1(int n, int a, int b) {
+    vi arr(n+1);
+    int L = 1, R = n, cnta = 0, cntb = 0;
+    arr[1] = L++;
+    int i = 2;
+    while (i <= n && cnta < a && cntb < b) {
+        if (i%2 == 0) arr[i++] = R, R--, cnta++;
+        else arr[i++] = L, L++, cntb++;
     }
-    return res;
+    if (i%2) {
+        while (i <= n) {
+            arr[i++] = L++;
+        }
+    } else {
+        while (i <= n) arr[i++] = R--;
+    }
+    cnta = cntb = 0;
+    for (int i = 2; i <= n-1; i++) {
+        if (arr[i-1] < arr[i] && arr[i] > arr[i+1]) cnta++;
+        else if (arr[i-1] > arr[i] && arr[i] < arr[i+1]) cntb++;
+    }
+    if (cnta == a && cntb == b) {
+        for (int i = 1; i <= n; i++) cout << arr[i] << " "; cout << endl;
+        return true;
+    } else return false;
+}
+
+bool f2(int n, int a, int b) {
+    vi arr(n+1);
+    int L = 1, R = n, cnta = 0, cntb = 0;
+    arr[1] = R--;
+    int i = 2;
+    while (i <= n && cnta < a && cntb < b) {
+        if (i % 2 == 0) arr[i++] = L, L++, cntb++;
+        else arr[i++] = R, R--, cnta++;
+    }
+    if (i%2) {
+        while (i <= n) {
+            arr[i++] = R--;
+        }
+    } else {
+        while (i <= n) arr[i++] = L++;
+    }
+    cnta = cntb = 0;
+    for (int i = 2; i <= n-1; i++) {
+        if (arr[i-1] < arr[i] && arr[i] > arr[i+1]) cnta++;
+        else if (arr[i-1] > arr[i] && arr[i] < arr[i+1]) cntb++;
+    }
+    if (cnta == a && cntb == b) {
+        for (int i = 1; i <= n; i++) cout << arr[i] << " "; cout << endl;
+        return true;
+    } else return false;
 }
 
 void solve() {
-    cin >> n;
-    a = vlli(n); for (lli &i: a) cin >> i;
-    map<lli, lli> F;
-    for (lli i: a) F[i]++;
-    // dp = vlli(n+1);
-    // dp[0] = F[0];
-    // for (int i = 1; i <= n; i++) dp[i] = dp[i-1] + F[i];
-    if (n == 1) {
-        cout << (a[0] <= 1) << endl;
-        return;
-    }
-    // lli cnt = dp[2] - F[1];
-    lli ans = (power(2, F[0]+F[2]) % MOD + MOD - 1) % MOD;
-    ans = (ans + MOD + power(2, F[1]) % MOD - 1) % MOD;
-    cout << ans << endl;
+    int n, a, b; cin >> n >> a >> b;
+    if (f1(n,a,b) || f2(n,a,b)) return;
+    else cout << -1 << endl;
 }   
   
 int main() {
