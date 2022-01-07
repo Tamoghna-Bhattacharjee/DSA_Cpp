@@ -31,11 +31,7 @@ void solve() {
     for (int i = 1; i <= n; i++) {
         for (int j = 0; j <= sum; j++) {
             dp[i][j] = dp[i-1][j];
-            int x = a[i];
-            while (x <= j) {
-                dp[i][j] += dp[i-1][j-x];
-                x += a[i];
-            }
+            if (j-a[i] >= 0) dp[i][j] += dp[i][j-a[i]];
         }
     }
     cout << dp[n][sum] << endl;
