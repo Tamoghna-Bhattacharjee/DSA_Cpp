@@ -16,3 +16,60 @@ https://practice.geeksforgeeks.org/problems/boundary-traversal-of-binary-tree/1
 House Robber III
 https://leetcode.com/problems/house-robber-iii/
 
+
+Postorder Traversal iterative:
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> v;
+        if (!root) return v;
+        stack<TreeNode*> s;
+        s.push(root);
+        
+        while (!s.empty()) {
+            auto cur = s.top();
+            s.pop();
+            v.push_back(cur->val);
+            if (cur->left) s.push(cur->left);
+            if (cur->right) s.push(cur->right);
+        }
+        reverse(v.begin(), v.end());
+        return v;
+    }
+
+Preorder Traversal iterative:
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> v;
+        if (!root) return v;
+        stack<TreeNode*> s;
+        s.push(root);
+        
+        while (!s.empty()) {
+            auto cur = s.top();
+            s.pop();
+            v.push_back(cur->val);
+            if (cur->right) s.push(cur->right);
+            if (cur->left) s.push(cur->left);
+        }
+        return v;
+    }
+
+Inorder Traversal iterative:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> v;
+        if (!root) return v;
+        
+        stack<TreeNode*> s;
+        TreeNode* cur = root;
+        
+        while (cur != NULL || !s.empty()) {
+            if (cur) {
+                s.push(cur);
+                cur = cur->left;
+            } else {
+                TreeNode* temp = s.top(); s.pop();
+                v.push_back(temp->val);
+                cur = temp->right;
+            }
+        }
+        return v;
+    }
+

@@ -1,0 +1,111 @@
+SEARCH:
+Node* search(Node* root, int k) {
+    if (root->data == k || root == NULL) return root;
+    if (k > root->data) return search(root->right, k);
+    else return search(root->left, k);
+}
+
+
+INSERTION: https://leetcode.com/problems/insert-into-a-binary-search-tree/
+
+Node* insertNode(Node* root, int k) {
+    if (root == NULL) return new Node(k);
+    if (root->data == k) return root;
+    if (k > root->data) root->right = insertNode(root->right, k);
+    else root->left = insertNode(root->left, k);
+    return root;
+}
+
+DELETE NODE: https://leetcode.com/problems/delete-node-in-a-bst/
+
+Node* deleteNode(Node* root, int key) {
+    if (root == NULL) return root;
+    if (key > root->data) {
+        root->right = deleteNode(root->right, key);
+        return root;
+    } else if (key < root->data) {
+        root->left = deleteNode(root->left, key);
+        return root;
+    } else {
+        if (root->left == NULL) return root->right;
+        else if (root->right == NULL) return root->left;
+        else {
+            Node* cur = root->right;
+            while (cur->left) cur = cur->left;
+            root->data = cur->data;
+            root->right = deleteNode(root->right, cur->data);
+            return root;
+        }
+    }
+}
+
+
+Inorder traversal of BST: give an array sorted i non dec order
+postorder is nothing but preorder on swapped BST (where the left and right child of each 
+node is swapped).
+
+Populate Inorder Successor:
+    void dfs(Node* root, Node* &pred) {
+        if (root == NULL) return;
+        dfs(root->left, pred);
+        if (pred) pred->next = root;
+        pred = root;
+        dfs(root->right, pred);
+    }
+
+BST from preorder: (https://leetcode.com/problems/construct-binary-search-tree-from-preorder-traversal/submissions/)
+    Node* dfs(vector<int> &p, int &i, int mi, int mx) {
+        if (i >= p.size()) return NULL;
+        if (p[i] < mi || p[i] > mx) return NULL;
+        Node* root = new Node(p[i++]);
+        root->left = dfs(p,i,mi,root->data);
+        root->right = dfs(p,i,root->data, mx);
+        return root;
+    }
+
+BST from postorder: https://practice.geeksforgeeks.org/problems/construct-bst-from-post-order/1/
+    Node* dfs(vector<int> &p, int &i, int mi, int mx) {
+        if (i < 0) return NULL;
+        if (p[i] < mi || p[i] > mx) return NULL;
+        Node* root = new Node(p[i--]);
+        root->right = dfs(p,i,root->data, mx);
+        root->left = dfs(p,i,mi, root->data);
+        return root;
+    }
+
+Convert BT to BST: https://practice.geeksforgeeks.org/problems/binary-tree-to-bst/1
+1. dfs over all node and store the data in a deque 
+2. sort it in non dec order 
+3. recursively create the BST in inorder fasion
+
+    void dfs(Node* u, deque<int> &a) {
+        if (u == NULL) return;
+        a.push_back(u->data);
+        dfs(u->left, a);
+        dfs(u->right, a);
+    }
+    void mkBST(Node* root, deque<int> &a) {
+        if (root == NULL) return;
+        mkBST(root->left, a);
+        root->data = a.front(); a.pop_front();
+        mkBST(root->right, a);
+    }
+    Node *binaryTreeToBST (Node *root) {
+        deque<int> a;
+        dfs(root, a);
+        sort(a.begin(), a.end());
+        mkBST(root, a);
+        return root;
+    }
+
+LCA of Two node:
+    Node* LCA(Node *root, int n1, int n2) {
+        if (n1 > n2) swap(n1, n2);
+        if (root == NULL) return NULL;
+        int d = root->data;
+        if (d > n1 && d > n2) return LCA(root->left, n1, n2);
+        else if (d < n1 && d < n2) return LCA(root->right, n1, n2);
+        else return root;
+    }
+
+
