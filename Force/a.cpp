@@ -28,9 +28,6 @@ const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"}; 
 
 void solve() {
-    map<int, int> mp;
-    for (int i = 1; i <= 6; i++) mp[i]++;
-    for (auto [k, v]: mp) cout << k << " " << v << endl;
 }   
   
 int main() {
