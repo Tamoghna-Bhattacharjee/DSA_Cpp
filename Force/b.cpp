@@ -27,64 +27,137 @@ const int N = 2e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"}; 
 
-bool f1(int n, int a, int b) {
-    vi arr(n+1);
-    int L = 1, R = n, cnta = 0, cntb = 0;
-    arr[1] = L++;
-    int i = 2;
-    while (i <= n && cnta < a && cntb < b) {
-        if (i%2 == 0) arr[i++] = R, R--, cnta++;
-        else arr[i++] = L, L++, cntb++;
+struct node {
+    lli mx;
+    node() {
+        // change
+        mx = -INF;
     }
-    if (i%2) {
-        while (i <= n) {
-            arr[i++] = L++;
-        }
-    } else {
-        while (i <= n) arr[i++] = R--;
+    node(lli x) {
+        // change
+        mx = x;
     }
-    cnta = cntb = 0;
-    for (int i = 2; i <= n-1; i++) {
-        if (arr[i-1] < arr[i] && arr[i] > arr[i+1]) cnta++;
-        else if (arr[i-1] > arr[i] && arr[i] < arr[i+1]) cntb++;
+    void merge(node &l, node &r) {
+        // change
+        mx = max(l.mx, r.mx);
     }
-    if (cnta == a && cntb == b) {
-        for (int i = 1; i <= n; i++) cout << arr[i] << " "; cout << endl;
-        return true;
-    } else return false;
-}
+};
 
-bool f2(int n, int a, int b) {
-    vi arr(n+1);
-    int L = 1, R = n, cnta = 0, cntb = 0;
-    arr[1] = R--;
-    int i = 2;
-    while (i <= n && cnta < a && cntb < b) {
-        if (i % 2 == 0) arr[i++] = L, L++, cntb++;
-        else arr[i++] = R, R--, cnta++;
+struct segTree {
+    lli size;
+    vector<node> st;
+    node identity;
+
+    void init(int x) {
+        size = x;
+        st.resize(4*size+4);
+        identity = node(-INF); // change
     }
-    if (i%2) {
-        while (i <= n) {
-            arr[i++] = R--;
+
+    void build (int si, int ss, int se, vlli &a) {
+        if (ss > se) return;
+        if (ss == se) {
+            st[si] = node(a[ss]); // change
+            return;
         }
-    } else {
-        while (i <= n) arr[i++] = L++;
+        int mid = (ss + se) / 2;
+        build (2*si, ss, mid, a);
+        build (2*si + 1, mid + 1, se, a);
+        st[si].merge(st[2*si], st[2*si+1]);
     }
-    cnta = cntb = 0;
-    for (int i = 2; i <= n-1; i++) {
-        if (arr[i-1] < arr[i] && arr[i] > arr[i+1]) cnta++;
-        else if (arr[i-1] > arr[i] && arr[i] < arr[i+1]) cntb++;
+
+    void set(int si, int ss, int se, int ui, lli x) {
+        if (ss == se) {
+            // change
+            st[si] = node(x);
+            return;
+        }
+        int mid = (ss + se) / 2;
+        if (ui <= mid) set(2*si, ss, mid, ui, x);
+        else set(2*si + 1, mid + 1, se, ui, x);
+        st[si].merge(st[2*si], st[2*si + 1]);
     }
-    if (cnta == a && cntb == b) {
-        for (int i = 1; i <= n; i++) cout << arr[i] << " "; cout << endl;
-        return true;
-    } else return false;
-}
+
+    void rupd(int si, int ss, int se, int us, int ue, lli diff) {
+        if (us > se || ue < ss || ss > se) return;
+        if (ss >= us && se <= ue) { 
+            // change
+            st[si].mx += (se - ss + 1) * diff;
+            return;
+        }
+        int mid = (ss + se) / 2;
+        rupd(2*si, ss, mid, us, ue, diff);
+        rupd(2*si + 1, mid + 1, se, us, ue, diff);
+        st[si].merge(st[2*si], st[2*si + 1]);
+    }
+
+    node qry (int si, int ss, int se, int qs, int qe) {
+        if (qs > se || qe < ss || ss > se) return identity;
+        if (ss >= qs && se <= qe) return st[si];
+        int mid = (ss + se)/2;
+        node l = qry(2*si, ss, mid, qs, qe);
+        node r = qry(2*si+1, mid+1, se, qs, qe);
+        node res; res.merge(l,r);
+        return res;
+    }
+
+    // lli ptqry(int si, int ss, int se, int qs, int qe, lli x) {
+    //     if (qs > se || qe < ss || ss > se) return -1;
+    //     if (st[si].mx < x) return -1;
+    //     if (ss == se) return ss;
+    //     int mid = (ss + se) / 2;
+    //     lli l = ptqry(2*si, ss, mid, qs, qe, x);
+    //     if (l != -1) return l;
+    //     lli r = ptqry(2*si + 1, mid+1,se, qs, qe, x);
+    //     if (r != -1) return r;
+    //     return -1;
+    // }
+
+    // driver code:
+    void build (vlli &a) {
+        build(1, 1, size, a);
+    }
+
+    void set(int ui, lli x) {
+        set(1,1,size,ui, x);
+    }
+
+    void rupd(int us, int ue, lli diff) {
+        if (us > ue) return;
+        rupd(1, 1, size, us, ue, diff);
+    }
+
+    node qry (int qs, int qe) {
+        if (qs > qe) return identity;
+        return qry (1, 1, size, qs, qe);
+    }
+
+    // lli ptqry(lli x, int qs, int qe) {
+    //     return ptqry(1,1,size,qs,qe,x);
+    // }
+};
 
 void solve() {
-    int n, a, b; cin >> n >> a >> b;
-    if (f1(n,a,b) || f2(n,a,b)) return;
-    else cout << -1 << endl;
+    segTree st;
+    int n, m; cin >> n >> m;
+    vlli a(n+1);
+    for (int i = 1; i <= n; i++) cin >> a[i];
+    st.init(n);
+    st.build(a);
+
+    while (m--) {
+        int t; cin >> t;
+        if (t == 1) {
+            int ind, v; cin >> ind >> v; ind++;
+            st.set(ind, v);
+        } else {
+            int x, l; cin >> x >> l; l++;
+            int ans = st.ptqry(x,l,n);
+            if (ans == -1) cout << ans << endl;
+            else cout << ans - 1 << endl;
+        }
+    }
+    
 }   
   
 int main() {
@@ -95,7 +168,7 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     cout << fixed << setprecision(9);
-    int t = 1; cin >> t;
+    int t = 1; //cin >> t;
     for (int _i = 1; _i <= t; _i++) {
         //cout << "Case #" << _i << ": ";
         solve();

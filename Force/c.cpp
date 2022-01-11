@@ -27,55 +27,8 @@ const int N = 1e6;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"}; 
 
-// https://codeforces.com/contest/1622/problem/D
-
-vlli F1, F2, inv;
-
-void pre(int n) {
-    F1 = vlli(n+1); F2 = vlli(n+1); inv = vlli(n+1);
-    inv[1] = 1;
-    for (int i = 2; i <= n; i++) inv[i] = (MOD - MOD/i * inv[MOD%i] % MOD) % MOD;
-    F1[0] = F2[0] = 1;
-    for (int i = 1; i <= n; i++) {
-        F1[i] = i * F1[i-1] % MOD;
-        F2[i] = F2[i-1] * inv[i] % MOD;
-    }
-}
-
-lli nCr(int n, int r) {
-    if (r > n) return 0;
-    return F1[n] % MOD * F2[r] % MOD * F2[n-r] % MOD;
-}
-
-bool check(string s, int k) {
-    int cnt = 0;
-    for (char i: s) cnt += i-'0';
-    return cnt < k;
-}
-
 void solve() {
-    int n, k; cin >> n >> k;
-    pre(n);
-    string s; cin >> s;
-    if (k == 0 || check(s,k)) {
-        cout << 1 << endl;
-        return;
-    }
-    lli ans = 0;
-    for (int i = 0; i < n; i++) {
-        int cnt[2] = {0,0};
-        for (int j = i; j < n; j++) {
-            cnt[s[j]-'0']++;
-            if (cnt[1] > k) break;
-            int c[] = {cnt[0], cnt[1]};
-            c[1 ^ (s[i]-'0')]--; c[1 ^ (s[j]-'0')]--;
-            if (c[0] >= 0 && c[1] >= 0) {
-                ans = (ans + nCr(c[0]+c[1], c[1]) % MOD) % MOD;
-            } 
-        }
-    }
-    ans = (ans + 1) % MOD;
-    cout << ans << endl;
+    
 }   
   
 int main() {
@@ -86,7 +39,7 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     cout << fixed << setprecision(9);
-    int t = 1; //cin >> t;
+    int t = 1; cin >> t;
     for (int _i = 1; _i <= t; _i++) {
         //cout << "Case #" << _i << ": ";
         solve();
