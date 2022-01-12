@@ -57,7 +57,7 @@ void deleteNode() {
     a[1] = a.back(); a.pop_back();
     int ind = 1;
     while (ind < a.size()) {
-        int lft_ind = 2*ind, rgt_ind = 2*ind;
+        int lft_ind = 2*ind, rgt_ind = 2*ind+1;
         if (lft_ind >= a.size() && rgt_ind >= a.size()) break;
         else if (lft_ind >= a.size()) {
             if (a[ind] > a[rgt_ind]) swap(a[ind], a[rgt_ind]), ind = rgt_ind;
