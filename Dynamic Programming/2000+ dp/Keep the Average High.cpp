@@ -27,8 +27,30 @@ const int N = 2e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
 
+// https://codeforces.com/contest/1616/problem/D
+
 void solve() {
-    
+    int n; cin >> n;
+    vi a(n+1);
+    for (int i = 1; i <= n; i++) cin >> a[i];
+    lli x; cin >> x;
+    if (n == 1) {
+        cout << n << endl; return;
+    }
+    vector<vi> dp(n+1, vi(2)); 
+    // dp[i][0] = ans for taking i and not taking i-1
+    // dp[i][1] = ans for taking i and i-1
+
+    dp[1][0] = 1; dp[1][1] = 0;
+    dp[2][0] = 1; dp[2][1] = a[1] + a[2] >= 2*x? 2: 0;
+    for (int i = 3; i <= n; i++) {
+        dp[i][0] = 1 + max(dp[i-2][0], dp[i-2][1]);
+        dp[i][1] = 0;
+        if (a[i] + a[i-1] >= 2*x) dp[i][1] = max(dp[i][1], 1+dp[i-1][0]);
+        if (a[i]+a[i-1]+a[i-2] >= 3*x && a[i]+a[i-1] >= 2*x && a[i-1]+a[i-2] >= 2*x)
+            dp[i][1] = max(dp[i][1], 1 + dp[i-1][1]);
+    }    
+    cout << max(dp[n][0], dp[n][1]) << endl;
 }   
   
 int main() {

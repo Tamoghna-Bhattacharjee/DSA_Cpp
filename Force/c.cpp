@@ -28,8 +28,25 @@ const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"}; 
 
 void solve() {
-    vi a = {0,1,2,3,4,5,6,7,8,9,10};
-    cout << lower_bound(a.begin(), a.end(), 5) - a.begin() << endl;
+    lli L, R; cin >> L >> R;
+    lli x = R-L+1, ans;
+    if (x%2 == 0) ans = x/2;
+    else {
+        lli e, o;
+        if (L%2 == 0) e = (x+1)/2, o = x/2;
+        else e = x/2, o = (x+1)/2;
+        ans = e;
+    }
+    for (lli i = 0; i < 32; i++) {
+        lli F1 = 1LL << i;
+        lli F2 = 1LL << (i+1); F2--;
+        if (F2 < L || F1 > R) continue;
+        if (F1 <= L && F2 >= R) ans = 0;
+        else if (F1 <= L && F2 <= R) ans = min(ans, x-(F2-L+1));
+        else if (F1 >= L && F2 <= R) ans = min(ans, x-(F2-F1+1));
+        else if (F1 >= L && F2 >= R) ans = min(ans, x-(R-F1+1)); 
+    }
+    cout << ans << endl;
 }   
   
 int main() {
