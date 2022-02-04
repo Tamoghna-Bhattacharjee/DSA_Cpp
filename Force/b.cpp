@@ -115,6 +115,7 @@ struct segTree {
 
     // driver code:
     void build (vlli &a) {
+        // a must be 1-indexed
         build(1, 1, size, a);
     }
 
