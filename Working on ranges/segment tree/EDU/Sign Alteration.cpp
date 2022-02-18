@@ -27,111 +27,48 @@ const int N = 2e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
 
-// https://codeforces.com/edu/course/2/lesson/5/3/practice/contest/280799/problem/A
+// https://codeforces.com/edu/course/2/lesson/4/4/practice/contest/274684/problem/A
 
 struct node {
-    lli sum, pref, suf, seg;
+    lli sum;
     node() {
         // change
-        sum = 0; 
-        pref = suf = 0;
-        seg = 0;
+        sum = 0;
     }
     node(lli x) {
         // change
-        sum = pref = suf = seg = x;
+        sum = x;
     }
     void merge(node &l, node &r) {
         // change
         sum = l.sum + r.sum;
-        pref = max(l.pref, l.sum + r.pref);
-        suf = max(r.suf, r.sum + l.suf);
-        seg = max(max(l.seg, r.seg), l.suf + r.pref);
     }
-};
-
-struct update {
-    lli v;
-    update() {
-        // chnage
-        v = -INF;
-    }
-    update(lli x) {
-        // chnage
-        v = x;
-    }
-    void combine(update &other) {
-        // change
-        v = other.v;
-    }
-    void apply(node &a, int ss, int se) {
-        // change
-        a.sum = (se - ss + 1) * v;
-        if (v >= 0) {
-            a.pref = a.suf = a.seg = (se - ss + 1) * v;
-        } else {
-            a.pref = a.suf = a.seg = 0;
-        }
-    }
-    operator==(update &other) {
-        // change
-        return v == other.v;
-    } 
 };
 
 struct segTree {
     lli size;
     vector<node> st;
-    vector<update> lazy;
     node identity;
-    update identity_update;
 
     void init(int x) {
         size = x;
         st.resize(4*size+4);
-        lazy.resize(4*size+4);
         identity = node(); // change
-        identity_update = update(); // change
     }
 
-    void pushdown(int si, int ss, int se) {
-        if (lazy[si] == identity_update) return;
-        lazy[si].apply(st[si], ss, se);
-        if (ss != se) {
-            lazy[2*si].combine(lazy[si]);
-            lazy[2*si+1].combine(lazy[si]);
-        }
-        lazy[si] = identity_update;
-    }
-
-    void build (int si, int ss, int se, vlli &a) {
-        if (ss > se) return;
+    void set(int si, int ss, int se, int ui, lli x) {
         if (ss == se) {
-            st[si] = node(a[ss]); // change
+            // change
+            st[si] = node(x);
             return;
         }
         int mid = (ss + se) / 2;
-        build (2*si, ss, mid, a);
-        build (2*si + 1, mid + 1, se, a);
-        st[si].merge(st[2*si], st[2*si+1]);
-    }
-
-    void rupd(int si, int ss, int se, int us, int ue, update &upd) {
-        pushdown(si, ss, se);
-        if (us > se || ue < ss || ss > se) return;
-        if (ss >= us && se <= ue) { 
-            lazy[si].combine(upd);
-            pushdown(si, ss, se);
-            return;
-        }
-        int mid = (ss + se) / 2;
-        rupd(2*si, ss, mid, us, ue, upd);
-        rupd(2*si + 1, mid + 1, se, us, ue, upd);
+        if (ui <= mid) set(2*si, ss, mid, ui, x);
+        else set(2*si + 1, mid + 1, se, ui, x);
         st[si].merge(st[2*si], st[2*si + 1]);
     }
 
     node qry (int si, int ss, int se, int qs, int qe) {
-        pushdown(si, ss, se);
         if (qs > se || qe < ss || ss > se) return identity;
         if (ss >= qs && se <= qe) return st[si];
         int mid = (ss + se)/2;
@@ -140,19 +77,10 @@ struct segTree {
         node res; res.merge(l,r);
         return res;
     }
-
     // driver code:
-    void build (vlli &a) {
-        // a must be 1-indexed
-        build(1, 1, size, a);
+    void set(int ui, lli x) {
+        set(1,1,size,ui, x);
     }
-
-    void rupd(int us, int ue, lli v) {
-        if (us > ue) return;
-        update upd(v);
-        rupd(1, 1, size, us, ue, upd);
-    }
-
     node qry (int qs, int qe) {
         if (qs > qe) return identity;
         return qry (1, 1, size, qs, qe);
@@ -160,16 +88,26 @@ struct segTree {
 };
 
 void solve() {
-    int n, m; cin >> n >> m;
+    int n; cin >> n;
     segTree st; st.init(n);
-    st.rupd(1,n,0);
-    while (m--) {
-        int l, r, v; cin >> l >> r >> v;
-        l++;
-        st.rupd(l,r,v);
-        cout << st.qry(1,n).seg << endl;
+    vi a(n+1); for (int i = 1; i <= n; i++) cin >> a[i];
+    for (int i = 1; i <= n; i++) {
+        if (i%2) st.set(i,a[i]);
+        else st.set(i,-a[i]);
     }
-    
+    int m; cin >> m;
+    while (m--) {
+        int t; cin >> t;
+        if (t == 0) {
+            int ind, y; cin >> ind >> y;
+            if (ind % 2) st.set(ind, y);
+            else st.set(ind, -y);
+        } else {
+            int l, r; cin >> l >> r;
+            if (l%2) cout << st.qry(l,r).sum << endl;
+            else cout << -st.qry(l,r).sum << endl;
+        }
+    }
 }   
   
 int main() {

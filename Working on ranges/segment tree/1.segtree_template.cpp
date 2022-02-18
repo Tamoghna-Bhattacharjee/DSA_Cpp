@@ -27,26 +27,19 @@ const int N = 2e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
 
-// https://codeforces.com/edu/course/2/lesson/5/3/practice/contest/280799/problem/A
-
 struct node {
-    lli sum, pref, suf, seg;
+    lli mi;
     node() {
         // change
-        sum = 0; 
-        pref = suf = 0;
-        seg = 0;
+        mi = 0;
     }
     node(lli x) {
         // change
-        sum = pref = suf = seg = x;
+        mi = x;
     }
     void merge(node &l, node &r) {
         // change
-        sum = l.sum + r.sum;
-        pref = max(l.pref, l.sum + r.pref);
-        suf = max(r.suf, r.sum + l.suf);
-        seg = max(max(l.seg, r.seg), l.suf + r.pref);
+        mi = min(l.mi, r.mi);
     }
 };
 
@@ -54,7 +47,7 @@ struct update {
     lli v;
     update() {
         // chnage
-        v = -INF;
+        v = 0;
     }
     update(lli x) {
         // chnage
@@ -62,16 +55,11 @@ struct update {
     }
     void combine(update &other) {
         // change
-        v = other.v;
+        v += other.v;
     }
     void apply(node &a, int ss, int se) {
         // change
-        a.sum = (se - ss + 1) * v;
-        if (v >= 0) {
-            a.pref = a.suf = a.seg = (se - ss + 1) * v;
-        } else {
-            a.pref = a.suf = a.seg = 0;
-        }
+        a.mi += v;
     }
     operator==(update &other) {
         // change
@@ -88,9 +76,9 @@ struct segTree {
 
     void init(int x) {
         size = x;
-        st.resize(4*size+4);
+        st.resize(4*size+4); // chnage
         lazy.resize(4*size+4);
-        identity = node(); // change
+        identity = node(INF); // change
         identity_update = update(); // change
     }
 
@@ -162,12 +150,16 @@ struct segTree {
 void solve() {
     int n, m; cin >> n >> m;
     segTree st; st.init(n);
-    st.rupd(1,n,0);
     while (m--) {
-        int l, r, v; cin >> l >> r >> v;
-        l++;
-        st.rupd(l,r,v);
-        cout << st.qry(1,n).seg << endl;
+        int t; cin >> t;
+        if (t == 1) {
+            int l, r, v; cin >> l >> r >> v;
+            l++; 
+            st.rupd(l,r,v);
+        } else {
+            int l, r; cin >> l >> r; l++;
+            cout << st.qry(l,r).mi << endl;
+        }
     }
     
 }   
