@@ -22,38 +22,76 @@ template<typename T1, typename T2> void debug(map<T1, T2> _mm) {for (auto h: _mm
 // typedef tree<int, null_type, less<int>, 
 //             rb_tree_tag, tree_order_statistics_node_update> ordered_set;
 
-const lli INF = 1e18, MOD = 998244353;
+const lli INF = 1e18, MOD = 1e9 + 7;
 const int N = 2e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
-const string YN[] = {"NO", "YES"}; 
+const string YN[] = {"NO", "YES"};
 
-// https://codeforces.com/edu/course/2/lesson/4/2/practice/contest/273278/problem/B
+// https://codeforces.com/edu/course/2/lesson/5/3/practice/contest/280799/problem/B
 
 struct node {
-    lli sum = 0;
+    lli ans;
     node() {
         // change
-        sum = 0;
+        ans = 0;
     }
     node(lli x) {
         // change
-        sum = x;
+        ans = x;
     }
     void merge(node &l, node &r) {
         // change
-        sum = l.sum + r.sum;
+        ans = l.ans + r.ans;
     }
+};
+
+struct update {
+    lli v;
+    update() {
+        // chnage
+        v = 0;
+    }
+    update(lli x) {
+        // chnage
+        v = x;
+    }
+    void combine(update &other) {
+        // change
+        v ^= other.v;
+    }
+    void apply(node &a, int ss, int se) {
+        // change
+        if (v == 1) a.ans = (se-ss+1) - a.ans;
+    }
+    operator==(update &other) {
+        // change
+        return v == other.v;
+    } 
 };
 
 struct segTree {
     lli size;
     vector<node> st;
+    vector<update> lazy;
     node identity;
+    update identity_update;
 
     void init(int x) {
         size = x;
         st.resize(4*size+4);
-        identity = node(0); // change
+        lazy.resize(4*size+4);
+        identity = node(); // change
+        identity_update = update(); // change
+    }
+
+    void pushdown(int si, int ss, int se) {
+        if (lazy[si] == identity_update) return;
+        lazy[si].apply(st[si], ss, se);
+        if (ss != se) {
+            lazy[2*si].combine(lazy[si]);
+            lazy[2*si+1].combine(lazy[si]);
+        }
+        lazy[si] = identity_update;
     }
 
     void build (int si, int ss, int se, vlli &a) {
@@ -68,32 +106,22 @@ struct segTree {
         st[si].merge(st[2*si], st[2*si+1]);
     }
 
-    void set(int si, int ss, int se, int ui, int x) {
-        if (ss == se) {
-            // change
-            st[si] = node(x);
-            return;
-        }
-        int mid = (ss + se) / 2;
-        if (ui <= mid) set(2*si, ss, mid, ui, x);
-        else set(2*si + 1, mid + 1, se, ui, x);
-        st[si].merge(st[2*si], st[2*si + 1]);
-    }
-
-    void rupd(int si, int ss, int se, int us, int ue, lli diff) {
+    void rupd(int si, int ss, int se, int us, int ue, update &upd) {
+        pushdown(si, ss, se);
         if (us > se || ue < ss || ss > se) return;
         if (ss >= us && se <= ue) { 
-            // change
-            st[si].sum += (se - ss + 1) * diff;
+            lazy[si].combine(upd);
+            pushdown(si, ss, se);
             return;
         }
         int mid = (ss + se) / 2;
-        rupd(2*si, ss, mid, us, ue, diff);
-        rupd(2*si + 1, mid + 1, se, us, ue, diff);
+        rupd(2*si, ss, mid, us, ue, upd);
+        rupd(2*si + 1, mid + 1, se, us, ue, upd);
         st[si].merge(st[2*si], st[2*si + 1]);
     }
 
     node qry (int si, int ss, int se, int qs, int qe) {
+        pushdown(si, ss, se);
         if (qs > se || qe < ss || ss > se) return identity;
         if (ss >= qs && se <= qe) return st[si];
         int mid = (ss + se)/2;
@@ -103,56 +131,50 @@ struct segTree {
         return res;
     }
 
-    int ptqry(int si, int ss, int se, int k) {
+    int kthOne(int si, int ss, int se, int k) {
+        pushdown(si, ss, se);
         if (ss == se) return ss;
-        int l = st[2*si].sum;
-        int r = st[2*si + 1].sum;
-        int mid = (ss + se)/2;
-        if (l < k) return ptqry(2*si + 1, mid + 1, se, k-l);
-        else return ptqry(2*si, ss, mid, k);
+        int mid = (ss + se) / 2;
+        pushdown(2*si, ss, mid); pushdown(2*si+1, mid+1, se);
+        int l = st[2*si].ans, r = st[2*si+1].ans;
+        if (l >= k) return kthOne(2*si, ss, mid, k);
+        else return kthOne(2*si+1, mid + 1, se, k-l);
     }
 
     // driver code:
     void build (vlli &a) {
+        // a must be 1-indexed
         build(1, 1, size, a);
     }
 
-    void set(int ui, int x) {
-        set(1,1,size,ui, x);
-    }
-
-    void rupd(int us, int ue, lli diff) {
+    void rupd(int us, int ue, lli v) {
         if (us > ue) return;
-        rupd(1, 1, size, us, ue, diff);
+        update upd(v);
+        rupd(1, 1, size, us, ue, upd);
     }
 
     node qry (int qs, int qe) {
         if (qs > qe) return identity;
         return qry (1, 1, size, qs, qe);
     }
-
-    int ptqry(int k) {
-        return ptqry(1,1,size,k);
+    int kthOne(int k) {
+        return kthOne(1, 1, size, k);
     }
 };
 
 void solve() {
-    segTree st;
     int n, m; cin >> n >> m;
-    vlli a(n+1);
-    for (int i = 1; i <= n; i++) cin >> a[i];
-    st.init(n);
-    st.build(a);
+    segTree st; st.init(n);
+    st.rupd(1,n,0);
 
     while (m--) {
         int t; cin >> t;
         if (t == 1) {
-            int ind; cin >> ind; ind++;
-            a[ind] = 1^a[ind];
-            st.set(ind, a[ind]);
+            int l, r; cin >> l >> r; l++;
+            st.rupd(l,r,1);
         } else {
             int k; cin >> k; k++;
-            cout << st.ptqry(k)-1 << endl;
+            cout << st.kthOne(k)-1 << endl;
         }
     }
     
@@ -164,7 +186,7 @@ int main() {
         freopen("output.txt","w",stdout);
     #endif
     ios::sync_with_stdio(false);
-    cin.tie(NULL);
+    cin.tie(NULL); cout.tie(0);
     cout << fixed << setprecision(9);
     int t = 1; //cin >> t;
     for (int _i = 1; _i <= t; _i++) {
