@@ -17,6 +17,7 @@ Node* insertNode(Node* root, int k) {
 }
 
 DELETE NODE: https://leetcode.com/problems/delete-node-in-a-bst/
+DELETE NODE iterative: https://leetcode.com/problems/delete-node-in-a-bst/discuss/1591176/C%2B%2B-Simple-Solution-w-Images-and-Detailed-Explanation-or-Iterative-and-Recursive-Approach
 
 Node* deleteNode(Node* root, int key) {
     if (root == NULL) return root;

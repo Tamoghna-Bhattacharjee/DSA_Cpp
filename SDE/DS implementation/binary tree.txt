@@ -13,6 +13,9 @@ https://practice.geeksforgeeks.org/problems/print-a-binary-tree-in-vertical-orde
 Boundary Traversal of Binary tree 
 https://practice.geeksforgeeks.org/problems/boundary-traversal-of-binary-tree/1
 
+Diagonal Traversal of Binary Tree
+https://practice.geeksforgeeks.org/problems/diagonal-traversal-of-binary-tree/1
+
 House Robber III
 https://leetcode.com/problems/house-robber-iii/
 
@@ -73,3 +76,61 @@ Inorder Traversal iterative:
         return v;
     }
 
+
+
+Cnt Number of turns in a binary tree:
+    Node* lca(Node* root, int F, int S) {
+        if (!root) return NULL;
+        if (root->data == F || root->data == S) return root; 
+        Node* L = lca(root->left, F, S);
+        Node* R = lca(root->right, F, S);
+        if (L && R) return root;
+        else return L != NULL? L: R;
+    }
+    
+    int cntTurns(Node* root, bool goLeft, bool goRight, int F, int S) {
+        if (!root) return INT_MIN;
+        if (root->data == F || root->data == S) return 0;
+        int L = cntTurns(root->left, true, false, F, S) + (goLeft? 0: 1);
+        int R = cntTurns(root->right, false, true, F, S) + (goRight? 0: 1);
+        if (L >= 0 && R >= 0) return L+R+1;
+        else return L >= 0? L: R;
+    }
+    
+    int NumberOFTurns(struct Node* root, int first, int second) {
+        Node* LCA = lca(root, first, second);
+        if (LCA->data == first || LCA->data == second) {
+            int lft = cntTurns(LCA->left, true, false, first, second);
+            int rgt = cntTurns(LCA->right, false, true, first, second);
+            if (lft >= 0) return lft == 0? -1: lft;
+            else if (rgt >= 0) return rgt == 0? -1: rgt;
+            else return -1;
+        } else {
+            return cntTurns(LCA,true, true, first, second);
+        }  
+    }
+
+Reverse alternate levels of a perfect binary tree
+(// https://practice.geeksforgeeks.org/problems/reverse-alternate-levels-of-a-perfect-binary-tree/1/)
+    void dfs(Node* r1, Node* r2, int lvl) {
+        if (r1 == NULL || r2 == NULL) return;
+        if (lvl%2) swap(r1->data, r2->data);
+        dfs(r1->left, r2->right, lvl+1);
+        dfs(r1->right, r2->left, lvl+1);
+    }
+
+    void reverseAlternate(Node *root)
+    {
+        dfs(root->left, root->right, 1);
+    }
+
+
+Construct Tree from Inorder & Preorder:
+    Node* dfs(int in[], int pre[], int &ind, map<int, int> &mp, int L, int R) {
+        // mp -> map of the indexes of inorder traversal nodes
+        if (L > R) return NULL;
+        Node* root = new Node(pre[ind++]);
+        root->left = dfs(in, pre, ind, mp, L, mp[root->data]-1);
+        root->right = dfs(in, pre, ind, mp, mp[root->data]+1, R);
+        return root;
+    }
