@@ -22,18 +22,45 @@ template<typename T1, typename T2> void debug(map<T1, T2> _mm) {for (auto h: _mm
 // typedef tree<int, null_type, less<int>, 
 //             rb_tree_tag, tree_order_statistics_node_update> ordered_set;
 
-const lli INF = 1e18, MOD = 998244353;
+const lli INF = 1e18, MOD = 1e9 + 7;
 const int N = 1e6;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
-const string YN[] = {"NO", "YES"}; 
+const string YN[] = {"NO", "YES"};
+
+deque<int> f(lli k, set<int> &s) {
+    deque<int> res;
+    debug(s); cout << k << endl;
+    if (k <= 0 || s.empty()) return res;
+    int n = s.size();
+    if (k == 1) {
+        for (int i: s) res.pb(i);
+        return res;
+    }
+    int msb, bitCnt;
+    while (!s.empty()) {
+        msb = log2(k);
+        bitCnt = msb + 1;
+        if (n-bitCnt-1 > 0) break;
+        res.push_front(*s.begin()); s.erase(s.begin());
+        k -= (1 << msb);
+        n--;
+    }
+    if (n-bitCnt-1 > 0 && !s.empty()) res.push_front(*s.begin()), s.erase(s.begin()), n--;
+    while (n-bitCnt-1 > 0 && !s.empty()) {
+        res.pb(*s.begin()); s.erase(s.begin());
+        n--;
+    }
+    debug(res);
+    deque<int> t = f(k, s);
+    for(int i: t) res.pb(i);
+    return res;
+}
 
 void solve() {
-    int n; cin >> n;
-    vi a(n); for (auto &i: a) cin >> i;
-    vi b = a;
-    sort(b.begin(), b.end());
-    if (b == a) cout << "NO\n";
-    else cout << "YES\n";
+    lli n, k; cin >> n >> k;
+    set<int> s;
+    for (int i = 1; i <= n; i++) s.insert(i);
+    debug(f(k,s));
 }   
   
 int main() {
@@ -42,7 +69,7 @@ int main() {
         freopen("output.txt","w",stdout);
     #endif
     ios::sync_with_stdio(false);
-    cin.tie(NULL);
+    cin.tie(NULL); cout.tie(0);
     cout << fixed << setprecision(9);
     int t = 1; cin >> t;
     for (int _i = 1; _i <= t; _i++) {

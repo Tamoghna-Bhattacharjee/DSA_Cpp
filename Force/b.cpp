@@ -148,20 +148,6 @@ struct segTree {
 };
 
 void solve() {
-    int n, m; cin >> n >> m;
-    segTree st; st.init(n);
-    st.rupd(1,n,0);
-
-    while (m--) {
-        int t; cin >> t;
-        if (t == 1) {
-            int l, r; cin >> l >> r; l++;
-            st.rupd(l,r,1);
-        } else {
-            int k; cin >> k; k++;
-            cout << st.kthOne(k)-1 << endl;
-        }
-    }
     
 }   
   
