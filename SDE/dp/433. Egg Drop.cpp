@@ -20,9 +20,8 @@ const string YN[] = {"NO", "YES"};
 
 // https://practice.geeksforgeeks.org/problems/egg-dropping-puzzle-1587115620/1
 
-void solve() {
-    int n, k; // n -> #eggs, k-> Total floors
-    cin >> n >> k;
+void Onk2(int eggs, int floors) {
+    int n = eggs, k = floors;
     int dp[n+1][k+1]; memset(dp, 0, sizeof dp);
     for (int i = 1; i <= k; i++) dp[1][i] = i;
     for (int i = 1; i <= n; i++) dp[i][1] = 1;
@@ -37,6 +36,36 @@ void solve() {
         }
     }
     cout << dp[n][k] << endl;
+}
+
+void Onklogk(int eggs, int floor) {
+    int n = eggs, k = floor;
+    int dp[n+1][k+1]; memset(dp, 0, sizeof dp);
+    for (int i = 1; i <= k; i++) dp[1][i] = i;
+    for (int i = 1; i <= n; i++) dp[i][1] = 1;
+    
+    for (int i = 2; i <= n; i++) {
+        for (int j = 2; j <= k; j++) {
+            int ans = INT_MAX;
+            int L = 1, R = j;
+            while (L <= R) {
+                int mid = (L + R) / 2;
+                if (dp[i-1][mid-1] <= dp[i][j-mid]) L = mid + 1;
+                else R = mid - 1;
+            }
+            L--;
+            ans = 1 + max(dp[i-1][L-1], dp[i][j-L]);
+            dp[i][j] = ans;
+        }
+    }
+    cout << dp[n][k] << endl;
+}
+
+void solve() {
+    int n, k; // n -> #eggs, k-> Total floors
+    cin >> n >> k;
+    Onk2(n, k);
+    Onklogk(n ,k);
 }
 
 int main() {
