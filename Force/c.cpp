@@ -23,17 +23,25 @@ template<typename T1, typename T2> void debug(map<T1, T2> _mm) {for (auto h: _mm
 //             rb_tree_tag, tree_order_statistics_node_update> ordered_set;
 
 const lli INF = 1e18, MOD = 998244353;
-const int N = 1e6;
+const int N = 1e3;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
-const string YN[] = {"NO", "YES"}; 
+const string YN[] = {"NO", "YES"};
 
 void solve() {
     int n; cin >> n;
     vi a(n); for (auto &i: a) cin >> i;
-    vi b = a;
-    sort(b.begin(), b.end());
-    if (b == a) cout << "NO\n";
-    else cout << "YES\n";
+    set<int, greater<int>> s;
+    for (int i = 1; i <= n; i++) s.insert(i);
+    map<int, vi> mp;
+    for (int i = 0; i < n; i++) mp[a[i]].pb(i);
+    deque<int> p(n);
+    for (auto i: mp) {
+        for (int j: i.second) {
+            p[(n-j)%n] = *s.begin();
+            s.erase(s.begin());
+        }
+    }
+    
 }   
   
 int main() {
@@ -42,7 +50,7 @@ int main() {
         freopen("output.txt","w",stdout);
     #endif
     ios::sync_with_stdio(false);
-    cin.tie(NULL);
+    cin.tie(NULL); cout.tie(0);
     cout << fixed << setprecision(9);
     int t = 1; cin >> t;
     for (int _i = 1; _i <= t; _i++) {
