@@ -34,6 +34,8 @@ const string YN[] = {"NO", "YES"};
 // The test cases are generated so that the answer always exists 
 // and is in the range [2, 2 * 10^8]
 
+// logic- if the number of digit in the palindrome is even, it will be divisible by 11
+
 bool isPal(int n) {
     int rev = 0, x = n;
     while (n > 0) {
