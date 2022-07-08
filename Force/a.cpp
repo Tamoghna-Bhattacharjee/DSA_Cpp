@@ -4,6 +4,11 @@
 // using namespace __gnu_pbds;
 using namespace std;
 
+#pragma GCC optimize("Ofast")
+#pragma GCC target("avx,avx2,fma")
+#pragma GCC optimization ("O3")
+#pragma GCC optimization ("unroll-loops")
+
 #define lli long long int 
 #define ld long double
 #define vi vector<int>
