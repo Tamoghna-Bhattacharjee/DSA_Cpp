@@ -222,7 +222,7 @@ struct HLD {
             b = par[head[b]];
         }
         if (level[a] > level[b]) swap(a, b);
-        node x = st.qry(tin[head[b]], tin[b]);
+        node x = st.qry(tin[a], tin[b]);
         res.merge(res, x);
         return res;
     } 
