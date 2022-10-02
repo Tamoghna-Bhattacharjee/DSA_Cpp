@@ -66,7 +66,7 @@ struct update {
         a.sum += len * v;
         a.ws += len * (ss + se) * v / 2;
     }
-    operator==(update &other) {
+    bool operator==(update &other) {
         // change
         return v == other.v;
     } 

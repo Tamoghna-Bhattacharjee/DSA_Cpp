@@ -71,7 +71,7 @@ struct update {
         if (ty == 1) a.sum = (se - ss + 1) * assign;
         else a.sum += (se-ss+1)*add;
     }
-    operator==(update &other) {
+    bool operator==(update &other) {
         // change
         return add == other.add && ty == other.ty && assign == other.assign;
     } 

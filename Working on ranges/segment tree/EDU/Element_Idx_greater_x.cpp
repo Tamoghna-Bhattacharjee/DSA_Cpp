@@ -63,7 +63,7 @@ struct update {
         // change
         a.ans += v;
     }
-    operator==(update &other) {
+    bool operator==(update &other) {
         // change
         return v == other.v;
     } 

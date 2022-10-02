@@ -70,7 +70,7 @@ struct update {
         lli nn = (se - ss + 1);
         a.ans += nn * (2*v + (nn-1)*d)/2;
     }
-    operator==(update &other) {
+    bool operator==(update &other) {
         // change
         return v == other.v && d == other.d && ss == other.ss && se == other.se;
     } 

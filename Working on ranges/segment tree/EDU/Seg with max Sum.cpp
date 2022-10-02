@@ -73,7 +73,7 @@ struct update {
             a.pref = a.suf = a.seg = 0;
         }
     }
-    operator==(update &other) {
+    bool operator==(update &other) {
         // change
         return v == other.v;
     } 

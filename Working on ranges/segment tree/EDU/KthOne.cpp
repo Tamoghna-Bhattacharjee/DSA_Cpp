@@ -63,7 +63,7 @@ struct update {
         // change
         if (v == 1) a.ans = (se-ss+1) - a.ans;
     }
-    operator==(update &other) {
+    bool operator==(update &other) {
         // change
         return v == other.v;
     } 

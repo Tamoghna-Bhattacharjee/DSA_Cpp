@@ -68,7 +68,7 @@ struct update {
         a.seg=v;
 
     }
-    operator==(update &other) {
+    bool operator==(update &other) {
         // change
         return v == other.v;
     } 
