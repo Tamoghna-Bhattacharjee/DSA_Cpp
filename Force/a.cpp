@@ -31,6 +31,7 @@ const lli INF = 1e18, MOD = 1e9 + 7;
 const int N = 2e5;
 const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
+const double PI = acos(-1);
 
 void solve() {
     
