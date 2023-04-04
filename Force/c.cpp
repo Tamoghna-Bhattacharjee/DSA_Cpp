@@ -181,6 +181,23 @@ lli power(lli a, lli n) {
 
 // ============== Number Theory ==================//
 
+// ============== DSU =====================//
+
+int findNode(int a, vi &dsu) {
+    if (dsu[a] < 0) return a;
+    return dsu[a] = findNode(dsu[a], dsu);
+}
+
+void unionNode(int a, int b, vi &dsu) {
+    a = findNode(a, dsu); b = findNode(b, dsu);
+    if (a == b) return;
+    if (dsu[a] <= dsu[b]) swap(a, b);
+    dsu[b] += dsu[a];
+    dsu[a] = b;
+}
+
+// ============== DSU =====================//
+
 void solve() {
     
 }   
