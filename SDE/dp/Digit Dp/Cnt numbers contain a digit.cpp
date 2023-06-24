@@ -36,6 +36,36 @@ const double PI = acos(-1);
 // https://codeforces.com/contest/1811/problem/E
 // https://www.geeksforgeeks.org/count-numbers-from-1-to-n-that-have-4-as-a-a-digit/
 
+/* Alternate way
+
+int dp[10][2];
+
+int f(string &s, int i, bool tight, int power) {
+    if (i >= s.size()) return 0;
+    if (dp[i][tight] != -1) return dp[i][tight];
+    int ans = 0;
+    int end = tight? s[i]-'0': 9;
+    for (int j = 0; j <= end; j++) {
+        if (j == 4) {
+            if (j != end) ans += power;
+            else ans += atoi(s.c_str()) % power + 1;
+        } else {
+            ans += f(s, i+1, tight & (j == end), power/10);
+        }
+    }
+    return dp[i][tight] = ans;
+}
+
+int countNumberswith4(int N) {
+    memset(dp, -1, sizeof dp);
+    string s = to_string(N);
+    int p = 1;
+    for (int i = 0; i < s.size()-1; i++) p*=10;
+    return f(s, 0, 1, p);
+}
+
+*/
+
 vlli cnt(19), p(19);
 
 void pre() {
