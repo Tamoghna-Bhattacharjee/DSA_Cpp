@@ -29,6 +29,7 @@ void solve() {
         cout << YN[0] << endl; 
         return;
     }
+    sum /= 2;
     bool dp[n+1][sum + 1]; memset(dp, 0, sizeof dp);
     dp[0][0] = true;
     for (int i = 1; i <= n; i++) {
