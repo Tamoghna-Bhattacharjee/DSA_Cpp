@@ -73,7 +73,7 @@ void pre() {
     // d=0 cnt[0] = 0;
     // d=1 cnt[1] = count of numbers from 1 to 10 = 1
     // d=2 cnt[2] = count of numbers from 1 to 100 = cnt[1]*9 + 10 = 19
-    // d=3 cnt[3] = count of numbers from 1 to 1000 = cnt[2]*19 + 100 = 171
+    // d=3 cnt[3] = count of numbers from 1 to 1000 = cnt[2]*9 + 100 = 271
     p[0] = 1;
     for (int i = 1; i <= 18; i++) {
         cnt[i] = 9 * cnt[i-1] + p[i-1];
