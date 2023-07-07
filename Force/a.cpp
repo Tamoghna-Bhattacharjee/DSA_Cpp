@@ -33,8 +33,49 @@ const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
 const double PI = acos(-1);
 
+// https://www.geeksforgeeks.org/find-the-maximum-subarray-xor-in-a-given-array/
+// https://codeforces.com/contest/1847/problem/C
+
+vector<vi> trie;
+int nxt;
+
+void insert(int val) {
+    int cur = 0;
+    for (int i = 10; i >= 0; i--) {
+        int x = (val >> i) & 1;
+        if (trie[cur][x] == 0) {
+            trie[cur][x] = ++nxt;
+            trie.pb(vi(2));
+        }
+        cur = trie[cur][x];
+    }
+}
+
+int qry(int val) {
+    int ans = 0, cur = 0;
+    for (int i = 10; i >= 0; i--) {
+        int x = (val >> i) & 1;
+        if (trie[cur][1-x]) {
+            ans |= 1 << i;
+            cur = trie[cur][1-x];
+        } else cur = trie[cur][x];
+    }
+    return ans;
+}
+
 void solve() {
-    
+    int n; cin >> n;
+    vi a(n); for (auto &i: a) cin >> i;
+    trie = vector<vi>(1, vi(2));
+    nxt = 0;
+    int pref_xor = 0, mx = 0;
+    insert(pref_xor);
+    for (int i: a) {
+        pref_xor ^= i;
+        insert(pref_xor);
+        mx = max(mx, qry(pref_xor));
+    }
+    cout << mx << endl;
 }   
   
 int main() {
