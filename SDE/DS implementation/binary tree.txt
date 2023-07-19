@@ -134,3 +134,46 @@ Construct Tree from Inorder & Preorder:
         root->right = dfs(in, pre, ind, mp, mp[root->data]+1, R);
         return root;
     }
+
+
+
+
+Step-By-Step Directions From a Binary Tree Node to Another:
+// https://leetcode.com/problems/step-by-step-directions-from-a-binary-tree-node-to-another/description/
+
+    TreeNode* getLCA(TreeNode* r, int a, int b) {
+        if (!r) return NULL;
+        if (r->val == a || r->val == b) return r;
+        TreeNode* L = getLCA(r->left, a, b);
+        TreeNode* R = getLCA(r->right, a, b);
+        if (L && R) return r;
+        else return L == NULL? R: L;
+    }
+
+    bool getDir(TreeNode* r, int x, int isLeft, string &s) {
+        if (r == NULL) return false;
+        if (r->val == x) {
+            if (isLeft == 1) s.push_back('L');
+            else if (isLeft == 0) s.push_back('R');
+            return true;
+        }
+        bool L = getDir(r->left, x, 1, s);
+        bool R = getDir(r->right, x, 0, s);
+        
+        if (L | R) {
+            if (isLeft == 1) s.push_back('L');
+            else if (isLeft == 0) s.push_back('R');
+        }
+        return L | R;
+    } 
+
+    string getDirections(TreeNode* root, int a, int b) {
+        TreeNode* lca = getLCA(root, a, b);
+        cout << lca->val << endl;
+        string s1 = "", s2 = "";
+        getDir(lca, a, -1, s1);
+        getDir(lca, b, -1, s2);
+        for (char &i: s1) i = 'U';
+        reverse(s2.begin(), s2.end());
+        return s1+s2;
+    }
