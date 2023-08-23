@@ -1,0 +1,33 @@
+Approach-1: Using kadens algo
+    a -> array of element (1-indexed)
+    int dp[n+1] = {0}
+    dp[i] = min(a[i], dp[i-1] + a[i])
+    ----------------------------------------
+    To know the segment boundary {l,r}
+    vpii dp(n+1); dp[i].first -> val, dp[i].second -> l and i will be r 
+
+    if (a[i] < dp[i-1] + a[i]) dp[i] = {a[i], i};
+    else dp[i] = {dp[i-1] + a[i], dp[i-1].second}
+
+    find the dp idx with min val -> 
+        mi = dp[idx].first, l -> dp[idx].second, r = i;
+
+    -------------------------------------------
+
+    How to find min subarray sum in O(1) space
+        int ans = 0;
+        int mx = 0, sum = 0;
+        for (int i: a) {
+            sum += i;
+            mx = max(mx, sum);
+            if (sum - mx < ans) ans = sum - mx;
+        }
+        return ans;
+
+
+
+Approach 2:
+    Calculate Prefix and for each prefix i, Calculate max sufix
+    min subarray val = pref[i] + max_suffix[i+1 ... n]
+
+        max_suffix value can be precomputed and found in O(1)
