@@ -38,6 +38,8 @@ const double PI = acos(-1);
 // One of the very rare problem where the conecpt of binary lifting being used on graph
 // Generally used in tree to find LCA
 
+// Reason we can do binary lifting is because every disjoint set has a cycle
+
 void solve() {
     lli n, k; cin >> n >> k;
     vlli a(n); for (auto &i: a) cin >> i;
