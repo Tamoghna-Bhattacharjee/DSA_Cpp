@@ -34,6 +34,7 @@ const string YN[] = {"NO", "YES"};
 const double PI = acos(-1);
 
 // https://leetcode.com/problems/minimum-operations-to-form-subsequence-with-target-sum/description/
+// https://codeforces.com/contest/1303/problem/D
 
 // If total sum < taregt, return -1.
 // If the some sum >= target,
