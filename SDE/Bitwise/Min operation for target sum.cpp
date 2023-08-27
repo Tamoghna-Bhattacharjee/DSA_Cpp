@@ -40,6 +40,8 @@ const double PI = acos(-1);
 // If the some sum >= target,
 // we can always make up target.
 
+// Reason we can do binary lifting is because every disjoint set has a cycle
+
 
 int minOperations(vector<int>& a, int target) {
     priority_queue<int> pq;
