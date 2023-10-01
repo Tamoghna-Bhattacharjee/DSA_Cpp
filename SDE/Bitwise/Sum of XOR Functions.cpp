@@ -33,23 +33,21 @@ const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
 const double PI = acos(-1);
 
-// https://codeforces.com/contest/1879/problem/D
-
 void solve() {
     int n; cin >> n;
     vi a(n+1); for (int i = 1; i <= n; i++) cin >> a[i];
     lli ans = 0;
-    for (int bit = 0; bit <= 2; bit++) {
+    for (int bit = 0; bit <= 30; bit++) {
         vector<int> cnt(2), sumOfL(2);
         lli coef = 0, x = 0;
         cnt[0] = 1;
-        for (int i = 1; i <= n; i++) {
+        for (lli i = 1; i <= n; i++) {
             x ^= ((a[i] >> bit) & 1);
             // If x[R] = 1 ^ x[L] then this bit will contribute from L+1 to R
             // i.e size = R-(L+1) + 1 = R-L
             cnt[x]++;
             sumOfL[x] = (sumOfL[x] + i) % MOD;
-            coef = (coef + (cnt[1^x] * i - sumOfL[1^x] + MOD) % MOD) % MOD;
+            coef = (coef + (cnt[1^x] * i % MOD - sumOfL[1^x] + MOD) % MOD) % MOD;
         }
         ans = (ans + coef * (1LL << bit) % MOD) % MOD;
     }
