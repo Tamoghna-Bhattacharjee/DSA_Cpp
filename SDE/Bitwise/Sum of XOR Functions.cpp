@@ -42,8 +42,8 @@ void solve() {
     lli ans = 0;
     for (int bit = 0; bit <= 30; bit++) {
         vector<int> cnt(2), sumOfL(2);
-        // cnt[0] -> cnt for even number of 0's
-        // cnt[1] -> cnt for odd number of 0's
+        // cnt[0] -> cnt from where we get even number of 1's
+        // cnt[1] -> cnt from where we get odd number of 1's
         lli coef = 0;
         for (lli i = 1; i <= n; i++) {
             if ((a[i] >> bit) & 1) {
