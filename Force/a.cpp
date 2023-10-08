@@ -34,20 +34,7 @@ const string YN[] = {"NO", "YES"};
 const double PI = acos(-1);
 
 void solve() {
-    int n; cin >> n;
-    vlli a(n+1); for (int i = 1; i <= n; i++) cin >> a[i];
-    vlli dp(n+1);
-    dp[n] = a[n];
-    for (int i = n-1; i >= 0; i--) {
-        if (i & 1) {
-            dp[i] = max({dp[i], a[i] + dp[i+1], dp[i+1]});
-        } else {
-            dp[i] = max(dp[i], dp[i+2]);
-        }
-    }
-    lli ans = 0;
-    for (int i = 1; i <= (n&1? n: n-1); i++) ans = max(ans, dp[i]);
-    cout << ans << endl;
+    
 }
   
 int main() {
