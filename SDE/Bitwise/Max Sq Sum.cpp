@@ -33,21 +33,39 @@ const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
 const double PI = acos(-1);
 
+// https://leetcode.com/problems/apply-operations-on-array-to-maximize-sum-of-squares/
+
+/*
+The operation is similar to transferring all bits from number i to number j that are 
+not present in j. All the others bits remain the same in i and j. So basically no bits are 
+lost in the process.
+*/
+
+
 void solve() {
-    int n; cin >> n;
-    vlli a(n+1); for (int i = 1; i <= n; i++) cin >> a[i];
-    vlli dp(n+1);
-    dp[n] = a[n];
-    for (int i = n-1; i >= 0; i--) {
-        if (i & 1) {
-            dp[i] = max({dp[i], a[i] + dp[i+1], dp[i+1]});
-        } else {
-            dp[i] = max(dp[i], dp[i+2]);
+    int n, k; cin >> n >> k;
+    vi a(n); for (auto &i: a) cin >> i;
+
+    vector<int> dp(32);
+    for (int i: a) {
+        for (int j = 0; j < 32; j++) {
+            if ((i >> j) & 1) dp[j]++;
         }
     }
+
     lli ans = 0;
-    for (int i = 1; i <= (n&1? n: n-1); i++) ans = max(ans, dp[i]);
-    cout << ans << endl;
+    for (int i = 0; i < k; i++) {
+        lli val = 0;
+        for (int j = 0; j < 32; j++) {
+            if (dp[j]) {
+                dp[j]--;
+                val |= 1 << j;
+            }
+        }
+        ans += val * val % MOD;
+        ans = ans % MOD;
+    }
+    cout << ans << endl; 
 }
   
 int main() {
@@ -58,7 +76,7 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(0);
     cout << fixed << setprecision(9);
-    int t = 1; cin >> t;
+    int t = 1; //cin >> t;
     for (int _i = 1; _i <= t; _i++) {
         //cout << "Case #" << _i << ": ";
         solve();
