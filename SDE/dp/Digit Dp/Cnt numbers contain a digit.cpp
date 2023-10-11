@@ -87,8 +87,8 @@ lli countNumbersWith_K(lli n, lli digit) {
     lli d = log10(n);
     lli msd = n/p[d];
     if (msd == digit) return msd * cnt[d] + n % p[d] + 1;
-    else if (msd > digit) return (msd-1)*cnt[d] + p[d] + countNumbersWith_K(n%p[d], 4);
-    else return (msd)*cnt[d] + countNumbersWith_K(n%p[d], 4);
+    else if (msd > digit) return (msd-1)*cnt[d] + p[d] + countNumbersWith_K(n%p[d], digit);
+    else return (msd)*cnt[d] + countNumbersWith_K(n%p[d], digit);
 }
 
 void solve() {
