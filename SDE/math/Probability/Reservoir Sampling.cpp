@@ -42,7 +42,7 @@ Let the input array be stream[].
 */
 
 void solve() {
-    int n; cin >> n;
+    int n, k; cin >> n >> k;
     vi a(n); for (auto &i: a) cin >> i;
     vi res;
     int cnt = 0;
