@@ -45,7 +45,7 @@ void solve() {
     int n; cin >> n;
     vi a(n); for (auto &i: a) cin >> i;
     vi res;
-    int cnt;
+    int cnt = 0;
     for (int num: a) {
         cnt++;
         if (res.size() < k) res.pb(num);
