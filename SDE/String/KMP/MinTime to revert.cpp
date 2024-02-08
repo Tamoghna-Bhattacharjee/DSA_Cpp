@@ -47,7 +47,7 @@ vi getLPS(string &s) {
     vi LPS(n);
     int j = 0, i = 1;
     while (i < n) {
-        if (s[i] == s[j] || s[i] == '*') LPS[i++] = ++j;
+        if (s[i] == s[j]) LPS[i++] = ++j;
         else {
             if (j == 0) i++;
             else j = LPS[j-1];
