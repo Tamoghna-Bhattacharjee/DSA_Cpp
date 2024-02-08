@@ -60,6 +60,7 @@ void solve() {
     string s;
     int k;
     cin >> s >> k;
+    int n = s.size();
     vi LPS = getLPS(s);
     int len = LPS[n-1];
     while (len > 0 && (n-len) % k) len = LPS[len-1];
