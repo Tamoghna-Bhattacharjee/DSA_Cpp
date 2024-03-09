@@ -49,11 +49,11 @@ const double PI = acos(-1);
              = dp[i-1][j] + dp[i-1][j-1] + dp[i-1][j-2] + ... + dp[i-1][j-i+1]
 
     So replace j with j+1
-    dp[i][j+1] = dp[i-1][j] + dp[i-1][j-1] + ... + dp[i-1][j-i+2]
-    ==> dp[i][j+1] = dp[i-1][j] + dp[i][j] - dp[i-1][j-i+1]
+    dp[i][j+1] = dp[i-1][j+1] + dp[i-1][j] + dp[i-1][j-1] + ... + dp[i-1][j-i+2]
+    ==> dp[i][j+1] = dp[i-1][j+1] + dp[i][j] - dp[i-1][j-i+1]
 
     Now substitute j = j+1
-    dp[i][j] = dp[i-1][j-1] + dp[i][j-1] - dp[i-1][j-i]
+    dp[i][j] = dp[i-1][j] + dp[i][j-1] - dp[i-1][j-i]
 
     Also for a range [1...i] Max num of inv => i * (i-1) / 2
 */
