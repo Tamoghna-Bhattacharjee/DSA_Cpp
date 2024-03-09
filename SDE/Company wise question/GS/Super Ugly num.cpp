@@ -40,8 +40,11 @@ void solve() {
     vi primes(m); for (auto &i: primes) cin >> i;
     vector<int> dp(n+1);
     dp[1] = 1;
-    priority_queue<pair<lli, pair<lli, lli>>> pq;
+
+    // pq[x] -> val, prime, prime multiplied by which last ugly number
+    priority_queue<pair<lli, pair<lli, lli>>> pq;  
     for (int i: primes) pq.push({-i, {i, 1}});
+
     set<lli> s; s.insert(1);
     while (dp[n] == 0) {
         auto cur = pq.top(); pq.pop();
