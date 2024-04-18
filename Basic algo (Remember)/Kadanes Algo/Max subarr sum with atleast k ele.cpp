@@ -38,7 +38,7 @@ const double PI = acos(-1);
 // idea => sum[i-k+1 ... i] + max subarray sum in a[1...i-k]
 
 void solve() {
-    int n; cin >> n;
+    int n, k; cin >> n >> k;
     vlli a(n+1); for (int i = 1; i <= n; i++) cin >> a[i];
 
     vlli dp(n+1, -INF), pref(n+1);
