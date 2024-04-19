@@ -29,31 +29,28 @@ const string YN[] = {"NO", "YES"};
 
 // https://leetcode.com/problems/permutation-sequence/
 
-vi F;
-
-string f(int k, set<int> st) {
-    if (st.empty()) return "";
-    int n = st.size();
-    int x = -1, sum = 0, c = 1;
-    for (int i: st) {
-        if(F[n-1] * c >= k) {
-            x = i;
-            sum = F[n-1]*(c-1);
-            break;
-        }
-        c++;
-    }
-    st.erase(x);
-    return to_string(x) + f(k-sum, st);
-}
-
 void solve() {
     int n, k; cin >> n >> k;
-    F = vi(n+1); F[0] = 1;
-    for (int i = 1; i <= n; i++) F[i] = i * F[i-1];
-    set<int> st;
-    for (int i = 1; i <= n; i++) st.insert(i);
-    cout << f(k, st) << endl;
+    int F[n+1]; F[0] = 1;
+    for (int i = 1; i <= n; i++) F[i] = F[i-1] * i;
+    string ans;
+    set<int> s;
+    for (int i = 1; i <= n; i++) s.insert(i);
+
+    while (!s.empty()) {
+        int last = *s.begin();
+        int m = s.size();
+        for (int i: s) {
+            last = i;
+            if (k - F[m-1] > 0) {
+                k -= F[m-1];
+            } else break;
+        }
+        s.erase(last);
+        ans.push_back(last + '0');
+    }
+
+    cout << ans << endl;
 }
   
 int main() {
