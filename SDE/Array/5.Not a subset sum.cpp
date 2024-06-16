@@ -19,6 +19,7 @@ const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};  
 
 // https://practice.geeksforgeeks.org/problems/smallest-number-subset1220/1#
+// similar qs: https://leetcode.com/problems/patching-array/description/
 
 // 1st sort the array
 // Idea let say for index = 0 to i we can have all sum from 1 to x
