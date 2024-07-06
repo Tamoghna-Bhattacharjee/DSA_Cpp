@@ -36,7 +36,7 @@ const double PI = acos(-1);
 // https://leetcode.com/problems/find-subarray-with-bitwise-and-closest-to-k/
 
 void solve() {
-    int n; cin >> n;
+    int n, k; cin >> n >> k;
     vi a(n); for (auto &i: a) cin >> i;
     int ans = INT_MAX;
     for (int i = 0; i < n; i++) {
