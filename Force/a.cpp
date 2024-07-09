@@ -15,7 +15,7 @@ using namespace std;
 #define vlli vector<lli>
 #define vpii vector<pair<int, int>>
 #define pb push_back
-#define all(x) x.begin(),x.end()
+#define all(__x) __x.begin(),__x.end()
 
 template<typename T> void debug(T _a) {cout << _a << " ";}
 template<typename T1, typename T2> void debug(pair<T1, T2> _p) {cout<<"{";debug(_p.first);cout<<": ";debug(_p.second);cout<<"}\n";}
@@ -35,7 +35,7 @@ const string YN[] = {"NO", "YES"};
 const double PI = acos(-1);
 
 void solve() {
-    
+
 }
   
 int main() {
