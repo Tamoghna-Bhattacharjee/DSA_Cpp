@@ -33,6 +33,22 @@ const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
 const double PI = acos(-1);
 
+void uglyNum2() {
+    // https://leetcode.com/problems/ugly-number-ii/
+
+    int n; cin >> n;
+    vector<int> dp(n+1); dp[1] = 1;
+    int p2 = 1, p3 = 1, p5 = 1;
+    for (int i = 2; i <= n; i++) {
+        dp[i] = min({2*dp[p2], 3*dp[p3], 5*dp[p5]});
+        if (dp[i] == 2*dp[p2]) ++p2;
+        if (dp[i] == 3*dp[p3]) ++p3;
+        if (dp[i] == 5*dp[p5]) ++p5;
+    }
+    cout << dp[n] << endl;
+}
+
+
 // https://leetcode.com/problems/super-ugly-number/
 
 void solve() {
