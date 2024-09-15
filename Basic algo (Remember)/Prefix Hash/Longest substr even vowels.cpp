@@ -38,7 +38,6 @@ const double PI = acos(-1);
 
 void solve() {
     string s; cin >> s;
-    int n = s.size();
     vector<int> F(26, -1);
     string v = "aeiou";
     for (int i = 0; i < 5; i++) F[v[i]-'a'] = i;
