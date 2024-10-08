@@ -34,10 +34,53 @@ const int di[] = {-1,0,1,0}, dj[] = {0,1,0,-1};
 const string YN[] = {"NO", "YES"};
 const double PI = acos(-1);
 
-void solve() {
+// https://leetcode.com/problems/minimum-number-of-valid-strings-to-form-target-ii/
 
+vector<int> z_func(string &s) {
+    int n = s.size();
+    vector<int> z(n);
+    int l = 0, r = 0;
+    for (int i = 1; i < n; i++) {
+        if (i < r) z[i] = min(z[i-l], r-i+1);
+        while (i+z[i] < n && s[z[i]] == s[i+z[i]]) z[i]++;
+        if (i + z[i] - 1 > r) {
+            r = i + z[i] - 1;
+            l = i;
+        }
+    }
+    return z;
 }
 
+void solve() {
+    int m; cin >> m;
+    vector<string> a(m); for (auto &i: a) cin >> i;
+    string t; cin >> t;
+    int n = t.size();
+
+    vi match(n);
+    for (string &i: a) {
+        string s = i + "#" + t;
+        vi z = z_func(s);
+        int offset = i.size() + 1;
+        for (int j = s.size()-1; j >= 0 && s[j] != '#'; j--) {
+            match[j-offset] = max(match[j-offset], z[j]);
+        }
+    }
+
+    // jump problem
+    int jumps = 1;
+    int curRange = match[0], max_range = match[0];
+    for (int i = 1; i < n; i++) {
+        if (curRange == n) break;
+        max_range = max(max_range, i + match[i]);
+        if (i == curRange) {
+            jumps++;
+            curRange = max_range;
+        }
+    }
+    cout << (curRange == n? jumps: -1) << endl;
+}
+  
 int main() {
     #ifndef ONLINE_JUDGE
         freopen("input.txt","r",stdin);
