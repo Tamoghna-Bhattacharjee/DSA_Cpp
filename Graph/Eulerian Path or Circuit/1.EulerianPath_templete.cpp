@@ -96,7 +96,9 @@ void solve() {
     dfs(root, res);
     // iterative(root, res);
     reverse(all(res));
-    debug(res);
+
+    if (res.size() == m + 1) debug(res);
+    else cout << "Graph is disconnected and have non zero degree node in different forest\n";
 }
 
 int main() {
