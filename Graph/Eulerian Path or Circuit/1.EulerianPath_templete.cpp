@@ -49,7 +49,9 @@ int getStartNode(int n) {
         if (indeg[i] == outdeg[i] + 1) cntEnd++;
     }
     if (cntStart == 0 && cntEnd == 0) {
-        root = 1; // its a circuit and any node can be the starting node
+        for (int i = 1; i <= n; i++) {
+            if (outdeg[i] > 0) return i;
+        }
     }
     if (cntStart == 1 && cntEnd == 1) return root;
     return -1;
