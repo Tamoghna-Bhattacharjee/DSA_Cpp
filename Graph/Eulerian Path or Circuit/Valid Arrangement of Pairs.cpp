@@ -43,6 +43,13 @@ vector<int> res;
 void solve() {
     int m; cin >> m; // num of edges of the graph
     vector<vi> a(m); for (auto &i: a) cin >> i[0] >> i[1];
+
+    for (auto &i: a) {
+        int u = i[0], v = i[1];
+        g[u].pb(v);
+        indeg[v]++;
+        outdeg[u]++;
+    }
     
     int root = a[0][0];
     for (auto &i: g) {
