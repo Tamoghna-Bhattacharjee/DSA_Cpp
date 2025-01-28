@@ -48,14 +48,14 @@ A pair of indices (i, j) from an integer array p is called an inversion if:
 void solve() {
     int n, k; cin >> n >> k;
     int dp[n+1][k+1]; memset(dp, 0, sizeof dp);
-
+    dp[0][0] = 1;
     for (int i = 1; i <= n; i++) {
         for (int j = 0; j <= k; j++) {
             // Now i have to create a perm of len i
             // we can put the value i in idx -> [1 to i]
 
-            for (int k = 1; k <= i; k++) {
-                int inv = i-k;
+            for (int x = 1; x <= i; x++) {
+                int inv = i-x;
                 if (j-inv >= 0) (dp[i][j] += dp[i-1][j-inv]) %= MOD;
             }
         }
