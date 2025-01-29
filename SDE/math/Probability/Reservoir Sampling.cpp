@@ -35,6 +35,7 @@ const double PI = acos(-1);
 
 /*
 https://www.geeksforgeeks.org/reservoir-sampling/
+https://www.youtube.com/watch?v=DWZqBN9efGg
 
 So we are given a big array (or stream) of numbers (to simplify), and we need to 
 write an efficient function to randomly select k numbers where 1 <= k <= n. 
