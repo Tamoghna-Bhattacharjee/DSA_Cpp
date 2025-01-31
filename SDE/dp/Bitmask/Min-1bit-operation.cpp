@@ -51,6 +51,8 @@ Idea -> if kth bit is set, no of operation need to make it 0 => 2^(k+1) - 1
 void solve() {
     int n; cin >> n;
     vector<vlli> dp(31, vlli(2));
+    // dp[i][j] = num of operation to make ith bit = j {0,1} such that i-1th bit
+    // to 0th bit is 0
     if (n & 1) dp[0][0] = 1;
     else dp[0][1] = 1;
     for (int i = 1; i <= 30; i++) {
