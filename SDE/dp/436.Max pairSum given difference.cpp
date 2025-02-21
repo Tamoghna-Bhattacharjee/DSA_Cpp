@@ -26,8 +26,8 @@ void solve() {
     sort(a, a+n);
     vector<int> dp(n);
     for (int i = 1; i < n; i++) {
-        if (a[i]-a[i-1] < k) dp[i] = a[i]+a[i-1] + (i-2 >= 0? dp[i-2]: 0);
-        else dp[i] = dp[i-1];
+        dp[i] = dp[i-1];
+        if (a[i]-a[i-1] < k) dp[i] = max(dp[i], a[i]+a[i-1] + (i-2 >= 0? dp[i-2]: 0));
     }
     return dp[n-1];
 }   
