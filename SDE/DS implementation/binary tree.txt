@@ -138,7 +138,22 @@ Construct Tree from Inorder & Preorder:
         return root;
     }
 
+Construct a tree from preorder and post order:
+    TreeNode* dfs(int &i, int mx, vector<int> &pre, unordered_map<int, int> &mp) {
+        if (i >= pre.size()) return NULL;
+        if (mp[pre[i]] > mx) return NULL;
+        TreeNode* root = new TreeNode(pre[i++]);
+        root->left = dfs(i, mp[root->val], pre, mp);
+        root->right = dfs(i, mp[root->val], pre, mp);
+        return root;
+    }
 
+    TreeNode* constructFromPrePost(vector<int>& pre, vector<int>& post) {
+        unordered_map<int, int> mp;
+        for (int i = 0; i < post.size(); i++) mp[post[i]] = i;
+        int idx = 0;
+        return dfs(idx, INT_MAX, pre, mp);
+    }
 
 
 Step-By-Step Directions From a Binary Tree Node to Another:
