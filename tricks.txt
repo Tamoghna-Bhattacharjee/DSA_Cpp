@@ -1,0 +1,7 @@
+Stack:
+sub array min max pb --> next greater approach
+monotonic stack 
+
+
+Two Pointers:
+Sub array sum < or <= something
