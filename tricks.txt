@@ -5,3 +5,6 @@ monotonic stack
 
 Two Pointers:
 Sub array sum < or <= something
+
+Prefix hash:
+Cnt number of substring
