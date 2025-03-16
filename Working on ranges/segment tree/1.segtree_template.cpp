@@ -31,7 +31,7 @@ struct node {
     lli mi;
     node() {
         // change
-        mi = 0;
+        mi = INF;
     }
     node(lli x) {
         // change
@@ -78,7 +78,7 @@ struct segTree {
         size = x;
         st.resize(4*size+4); // chnage
         lazy.resize(4*size+4);
-        identity = node(INF); // change
+        identity = node(); // change
         identity_update = update(); // change
     }
 
