@@ -32,6 +32,7 @@ void solve() {
     while (i > 0 && a[i] <= a[i-1]) i--;
     if (i == 0) {
         sort(a.begin(), a.end());
+        debug(a);
         return;
     }
     int j = i;

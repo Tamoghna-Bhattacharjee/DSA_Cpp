@@ -37,7 +37,7 @@ const double PI = acos(-1);
 // Intuition: Take a[K] and increase the subarray greedyly towards left and right
 
 void solve() {
-    int n; cin >> n;
+    int n, k; cin >> n >> k;
     vi a(n); for (auto &i: a) cin >> i;
     int mi = a[k];
     int L = k-1, R = k+1;

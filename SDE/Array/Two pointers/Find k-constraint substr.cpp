@@ -37,7 +37,7 @@ const double PI = acos(-1);
 // https://leetcode.com/problems/count-substrings-that-satisfy-k-constraint-ii/
 
 void solve() {
-    int n, q; cin >> n >> q;
+    int n, q, k; cin >> n >> q >> k;
     string s; cin >> s; s = "#" + s;
 
     vlli left(n+1), pref(n+1);
