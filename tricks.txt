@@ -7,4 +7,4 @@ Two Pointers:
 Sub array sum < or <= something
 
 Prefix hash:
-Cnt number of substring
+Cnt number of substring or subarray
