@@ -35,6 +35,7 @@ const double PI = acos(-1);
 
 /*
 https://leetcode.com/problems/count-of-sub-multisets-with-bounded-sum/
+https://leetcode.com/problems/find-the-original-typed-string-ii/
 
 This is similar to bounded 0/1 knapsac problem where each element is having some freq
 dp[i][j] = #sub-multiset with i unique elements having sum = j
