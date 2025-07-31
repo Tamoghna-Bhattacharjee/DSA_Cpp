@@ -22,6 +22,9 @@ https://leetcode.com/problems/house-robber-iii/
 Distribute Coins:
 https://leetcode.com/problems/distribute-coins-in-binary-tree/description/
 
+Serialize-deserialize:
+https://leetcode.com/problems/serialize-and-deserialize-binary-tree/
+
 
 Postorder Traversal iterative:
     vector<int> postorderTraversal(TreeNode* root) {
@@ -79,7 +82,19 @@ Inorder Traversal iterative:
         return v;
     }
 
-
+Level order traversal iterative:
+    vector<int> levelOrderTraversal(TreeNode* root) {
+        queue<int> q;
+        q.push(root);
+        vector<int> ans; // INT_MIN for null
+        while (!q.empty()) {
+            TreeNode* cur = q.front(); q.pop();
+            ans.push_back(cur ? cur->val: INT_MIN);
+            q.push(cur->left);
+            q.push(cur->right);
+        }
+        return ans;
+    }
 
 Cnt Number of turns in a binary tree:
     Node* lca(Node* root, int F, int S) {
