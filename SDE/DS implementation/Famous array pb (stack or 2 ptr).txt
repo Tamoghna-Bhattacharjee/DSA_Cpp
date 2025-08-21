@@ -1,0 +1,16 @@
+Get minimum element from stack (See editorial) - 
+https://practice.geeksforgeeks.org/problems/get-minimum-element-from-stack/1
+
+Histogram problems:
+https://leetcode.com/problems/largest-rectangle-in-histogram/description/
+https://leetcode.com/problems/maximal-rectangle/description/
+https://leetcode.com/problems/maximum-score-of-a-good-subarray/description/
+
+Trapping rain water:
+https://leetcode.com/problems/trapping-rain-water/description/
+https://leetcode.com/problems/trapping-rain-water-ii/description/
+https://leetcode.com/problems/container-with-most-water/description/
+
+Count Submatrices With All Ones:
+https://leetcode.com/problems/count-submatrices-with-all-ones/description/
+
