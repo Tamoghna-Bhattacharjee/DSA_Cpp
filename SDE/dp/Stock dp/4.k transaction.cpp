@@ -39,6 +39,11 @@ void solve() {
     vector<int> cp(k+1, INT_MAX), prof(k+1);
     for (int i: p) {
         for (int j = 1; j <= k; j++) {
+            // Same day transaction allowed => Which is essentially neutral in nature
+            // So our present day state can depend on same day transaction
+            // Following will also work:
+            // ncp[j] = min(ncp[j], i - prof[j-1]);
+            // nprof[j] = max(nprof[j], i-cp[j]);
             cp[j] = min(cp[j], i - prof[j-1]);
             prof[j] = max(prof[j], i-cp[j]);
         }
